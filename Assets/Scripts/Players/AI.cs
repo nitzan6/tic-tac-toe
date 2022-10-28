@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class AI : MonoBehaviour, IPlayer
 {
-    public event Action<int> OnGetMove;
+    public Role Role { get; set; }
+    public event Action<int> OnChooseCell;
 }

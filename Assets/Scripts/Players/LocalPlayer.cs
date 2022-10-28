@@ -4,5 +4,11 @@ using UnityEngine;
 
 public class LocalPlayer : MonoBehaviour, IPlayer
 {
-    public event Action<int> OnGetMove;
+    public Role Role { get; set; }
+    public event Action<int> OnChooseCell;
+    
+    private void AttemptChooseCell(int cellNumber)
+    {
+        
+    }
 }
