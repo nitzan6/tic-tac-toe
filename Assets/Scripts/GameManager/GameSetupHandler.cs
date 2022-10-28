@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using TicTacToe.GameManagment;
+using TicTacToe.GameManagement.Players;
 
 namespace TicTacToe.GameManagement
 {
@@ -19,34 +21,17 @@ namespace TicTacToe.GameManagement
 
         private void ApplyGameSettings()
         {
-            HandleSelectedGameMode();
+            ApplySelectedGamemode();
         }
 
-        private void HandleSelectedGameMode()
+        
+        private void ApplySelectedGamemode()
         {
-            switch (_gameSettings.GameMode)
-            {
-                case GameMode.LocalVsAI:
-                    SetLocalVsAIMode();
-                    break;
-                case GameMode.LocalVsLocal:
-                    SetLocalVsLocalMode();
-                    break;
-                default:
-                    throw new InvalidOperationException($"Gamemode {_gameSettings.GameMode} is not supported");
-            }
-        }
+            // Get the types of the players
+            Type[] playerTypes = GamemodeFactory.GetPlayersFromGamemode(_gameSettings.Gamemode);
 
-        private void SetLocalVsLocalMode()
-        {
-            _player1.AddComponent<LocalPlayer>();
-            _player2.AddComponent<LocalPlayer>();
-        }
-
-        private void SetLocalVsAIMode()
-        {
-            _player1.AddComponent<LocalPlayer>();
-            _player2.AddComponent<AI>();
+            _player1.AddComponent(playerTypes[0]);
+            _player2.AddComponent(playerTypes[1]);
         }
     }
 }

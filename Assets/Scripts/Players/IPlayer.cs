@@ -1,6 +1,6 @@
 using System;
 
-namespace TicTacToe.Gameplay.Players
+namespace TicTacToe.GameManagement.Players
 {
 
     //defining the interface for a player

@@ -1,15 +1,15 @@
-using TicTacToe.GameProgression;
+using TicTacToe.GameManagement;
 using UnityEngine;
 
 namespace TicTacToe.GameManagment
 {
     public class GameManager : MonoBehaviour
     {
-        private GameProgressionHandler _gameProgressionHandler;
+        private GameProgressionManager _gameProgressionHandler;
 
         void Awake()
         {
-            _gameProgressionHandler = GetComponentInChildren<GameProgressionHandler>();
+            _gameProgressionHandler = GetComponentInChildren<GameProgressionManager>();
         }
 
         void Start()

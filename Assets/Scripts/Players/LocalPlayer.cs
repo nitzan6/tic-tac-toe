@@ -1,14 +1,17 @@
 using System;
-using TicTacToe.Gameplay.Players;
 using UnityEngine;
 
-public class LocalPlayer : MonoBehaviour, IPlayer
+namespace TicTacToe.GameManagement.Players
 {
-    public Role Role { get; set; }
-    public event Action<int> OnChooseCell;
-    
-    private void AttemptChooseCell(int cellNumber)
+    public class LocalPlayer : MonoBehaviour, IPlayer
     {
-        
+        public Role Role { get; set; }
+        public event Action<int> OnChooseCell;
+
+        private void AttemptChooseCell(int cellNumber)
+        {
+
+        }
     }
+
 }
