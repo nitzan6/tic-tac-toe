@@ -7,7 +7,7 @@ namespace TicTacToe.GameProgression
 
         public void HandleGameStart()
         {
-
+            Debug.Log("Game started");
         }
     }
 }
