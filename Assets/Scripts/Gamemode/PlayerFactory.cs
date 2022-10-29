@@ -4,20 +4,33 @@ using System.Reflection;
 using TicTacToe.GameManagement.Gamemodes;
 using TicTacToe.GameManagement.Players;
 
-namespace TicTacToe.GameManagment
+namespace TicTacToe.GameManagment.Setup
 {
-    public static class GamemodeFactory
+    public static class PlayerFactory
     {
         private static Type[] _playerTypes = Assembly.GetAssembly(typeof(IPlayer)).GetTypes()
                 .Where(type => type.IsClass && typeof(IPlayer).IsAssignableFrom(type))
                 .ToArray();
 
-        public static Type[] GetPlayersFromGamemode(IGamemode<IPlayer, IPlayer> gamemode)
+        public static Type[] GetPlayersFromGamemode(Gamemode gamemode)
         {
-            Type[] currentGamemodePlayerTypes = new Type[2];
+            Type[] gamemodePlayerTypes = new Type[2];
 
-            currentGamemodePlayerTypes = _playerTypes.Where(type => (Type)gamemode.Player1 == type && (Type)gamemode.Player2 == type).ToArray();
+            foreach (Type type in _playerTypes)
+            {
+                if (gamemode.Player1Type == type)
+                {
+                    gamemodePlayerTypes[0] = type;
+                }
 
+                if (gamemode.Player2Type == type)
+                {
+                    gamemodePlayerTypes[1] = type;
+                }
+            }
+
+            return gamemodePlayerTypes;
+            
             //playersTypes[0] = (gamemode.Player1 as LocalPlayer) || (gamemode.Player1 as AI);
 
             /*
@@ -33,8 +46,6 @@ namespace TicTacToe.GameManagment
                     throw new Exception($"The gamemode {gamemode} is not supported.");
             }
             */
-
-            return _playerTypes;
         }
     }
 }
