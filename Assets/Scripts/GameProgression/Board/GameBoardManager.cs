@@ -22,21 +22,38 @@ namespace TicTacToe.GameProgression
 
         private void ResetBoard()
         {
-            _board = new Board(Consts.BOARD_LENGTH, Consts.BOARD_WIDTH);
+            _board = new Board(Consts.BOARD_WIDTH, Consts.BOARD_HEIGHT);
         }
 
-        public bool CanPlaceSymbol(Vector2Int position)
+        public bool IsMoveValid(Vector2Int position)
         {
             return _board.IsCellEmpty(position);
         }
 
         public void MakeMove(Vector2Int position, Symbol symbol)
         {
+            if (!IsMoveValid(position))
+            {
+                return;
+            }
+
             _board.InsertElement(position, symbol);
-            // Board Updated event
+            _boardHistory.AddToHistory(position);
+
             GameEvents.Instance.SymbolPlaced(position, symbol);
+
+            _referee.CheckForWin(_board);
         }
         
+        public void UndoLastMove()
+        {
+            if (_boardHistory.IsEmpty())
+            {
+                return;
+            }
+
+
+        }
 
     }
 }

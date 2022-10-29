@@ -6,7 +6,9 @@ namespace TicTacToe.GameManagement.Players
     public class AI : MonoBehaviour, IPlayer
     {
         public Symbol Role { get; set; }
-        public event Action<int> OnChooseCell;
+        EventHandler<PlayerInputEventArgs> IPlayer.OnChooseCell { get; set; }
+
+
     }
 }
 
