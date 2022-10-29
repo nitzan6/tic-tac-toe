@@ -12,6 +12,11 @@ namespace TicTacToe.GameManagment
             _gameProgressionHandler = GetComponentInChildren<GameProgressionManager>();
         }
 
+        void OnEnable()
+        {
+            GameEvents.Instance.onStartGame += () => Debug.Log("TEST");
+        }
+
         void Start()
         {
             StartGame();
@@ -19,6 +24,7 @@ namespace TicTacToe.GameManagment
 
         private void StartGame()
         {
+            GameEvents.Instance.StartGame();
             _gameProgressionHandler.HandleGameStart();
         }
 

@@ -1,8 +1,9 @@
 using System;
+using UnityEngine;
 
-namespace TicTacToe.GameProgression
+namespace TicTacToe.GameManagement
 {
-    public class GameEvents
+    public class GameEvents : MonoBehaviour
     {
         public static GameEvents Instance;
 
