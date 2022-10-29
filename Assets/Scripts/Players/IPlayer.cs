@@ -11,6 +11,6 @@ namespace TicTacToe.GameManagement.Players
         event Action<int> OnChooseCell;
 
         // every player is assigned a role, which is either X or O.
-        Role Role { get; set; }
+        Symbol Role { get; set; }
     }
 }

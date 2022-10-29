@@ -5,7 +5,7 @@ namespace TicTacToe.GameManagement.Players
 {
     public class LocalPlayer : MonoBehaviour, IPlayer
     {
-        public Role Role { get; set; }
+        public Symbol Role { get; set; }
         public event Action<int> OnChooseCell;
 
         private void AttemptChooseCell(int cellNumber)

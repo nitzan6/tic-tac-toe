@@ -1,4 +1,5 @@
 using System;
+using TicTacToe.GameProgression;
 using UnityEngine;
 
 namespace TicTacToe.GameManagement
@@ -16,6 +17,18 @@ namespace TicTacToe.GameManagement
         public void StartGame()
         {
             onStartGame?.Invoke();
+        }
+
+        public event Action<Vector2Int, Symbol> onSymbolPlaced;
+        public void SymbolPlaced(Vector2Int position, Symbol symbol)
+        {
+            onSymbolPlaced?.Invoke(position, symbol);
+        }
+
+        public event Action onUndoLastMove;
+        public void UndoLastMove()
+        {
+            onUndoLastMove?.Invoke();
         }
     }
 }

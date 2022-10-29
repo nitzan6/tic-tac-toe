@@ -5,8 +5,9 @@ public enum GameMode
     LocalVsAI,
 }
 
-public enum Role
+public enum Symbol
 {
+    EMPTY = 0,
     X,
-    O
+    O,
 }
