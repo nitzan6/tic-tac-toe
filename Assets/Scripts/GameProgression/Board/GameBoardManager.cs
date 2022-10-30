@@ -1,33 +1,23 @@
 using UnityEngine;
 using TicTacToe.GameManagement;
-using System.Collections.Generic;
 
 namespace TicTacToe.GameProgression
 {
     public class GameBoardManager : MonoBehaviour
     {
-        private Board _board;
         private BoardHistory _boardHistory;
         private Referee _referee;
+        public Board Board { get; private set; }
 
-        void Awake()
+        public void ResetBoard()
         {
-            
+            Board = new Board(Consts.BOARD_WIDTH, Consts.BOARD_HEIGHT);
         }
 
-        void OnEnable()
-        {
-            GameEvents.Instance.onStartGame += ResetBoard;
-        }
-
-        private void ResetBoard()
-        {
-            _board = new Board(Consts.BOARD_WIDTH, Consts.BOARD_HEIGHT);
-        }
-
+        //Check if the move is valid in the specified position
         public bool IsMoveValid(Vector2Int position)
         {
-            return _board.IsCellEmpty(position);
+            return Board.IsCellEmpty(position);
         }
 
         public void MakeMove(Vector2Int position, Symbol symbol)
@@ -37,12 +27,15 @@ namespace TicTacToe.GameProgression
                 return;
             }
 
-            _board.InsertElement(position, symbol);
+            Board.InsertElement(position, symbol);
             _boardHistory.AddToHistory(position);
 
-            GameEvents.Instance.SymbolPlaced(position, symbol);
+            GameEvents.Instance.MadeMove(position, symbol);
+        }
 
-            _referee.CheckForWin(_board);
+        public BoardState CheckBoardState()
+        {
+            return _referee.CheckBoard(Board);
         }
         
         public void UndoLastMove()

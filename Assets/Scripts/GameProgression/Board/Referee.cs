@@ -9,9 +9,9 @@ namespace TicTacToe.GameProgression
 
         }
 
-        public Symbol CheckForWin(Board board)
+        public BoardState CheckBoard(Board board)
         {
-            return Symbol.X;
+            return BoardState.PLAYING;
         }
 
     }
