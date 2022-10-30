@@ -1,8 +1,10 @@
 
-public enum GameMode
+public enum BoardState
 {
-    LocalVsLocal,
-    LocalVsAI,
+    PLAYING,
+    X_WIN,
+    O_WIN,
+    DRAW
 }
 
 public enum Symbol
