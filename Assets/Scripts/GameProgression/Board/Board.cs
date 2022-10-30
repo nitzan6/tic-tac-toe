@@ -5,25 +5,30 @@ namespace TicTacToe.GameProgression
 {
     public class Board
     {
-        private Symbol[,] _cells { get; set; }
+        public Symbol[,] Cells { get; private set; }
 
         public Board(int width, int height)
         {
-            _cells = new Symbol[width, height];
+            Cells = new Symbol[width, height];
         }
 
         public Board(Symbol[,] cells)
         {
-            _cells = cells;
+            Cells = cells;
+        }
+
+        public Vector2Int GetBounds()
+        {
+            return new Vector2Int(Cells.GetLength(0), Cells.GetLength(1));
         }
 
         public bool IsBoardEmpty()
         {
-            for (int i = 0; i < _cells.GetLength(0); i++)
+            for (int i = 0; i < Cells.GetLength(0); i++)
             {
-                for (int j = 0; j < _cells.GetLength(1); j++)
+                for (int j = 0; j < Cells.GetLength(1); j++)
                 {
-                    if (_cells[i,j] != Symbol.EMPTY)
+                    if (Cells[i,j] != Symbol.EMPTY)
                     {
                         return false;
                     }
@@ -35,21 +40,26 @@ namespace TicTacToe.GameProgression
 
         public void InsertElement(Vector2Int position, Symbol element)
         {
-            _cells[position.x, position.y] = element;
+            Cells[position.x, position.y] = element;
         }
 
         public bool IsCellEmpty(Vector2Int position)
         {
-            return _cells[position.x, position.y] == Symbol.EMPTY;
+            return Cells[position.x, position.y] == Symbol.EMPTY;
+        }
+
+        public Symbol GetSymbol(Vector2Int position)
+        {
+            return Cells[position.x, position.y];
         }
 
         public void Clear()
         {
-            for (int i = 0; i < _cells.GetLength(0); i++)
+            for (int i = 0; i < Cells.GetLength(0); i++)
             {
-                for (int j = 0; j < _cells.GetLength(1); j++)
+                for (int j = 0; j < Cells.GetLength(1); j++)
                 {
-                    _cells[i, j] = Symbol.EMPTY;
+                    Cells[i, j] = Symbol.EMPTY;
                 }
             }
         }

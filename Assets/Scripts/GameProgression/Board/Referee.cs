@@ -4,12 +4,7 @@ namespace TicTacToe.GameProgression
 {
     public class Referee
     {
-        public Referee()
-        {
-
-        }
-
-        public BoardState CheckBoard(Board board)
+        public BoardState CheckBoardState(Symbol[,] boardCells)
         {
             return BoardState.PLAYING;
         }

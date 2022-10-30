@@ -12,11 +12,22 @@ namespace TicTacToe.GameProgression
         public void ResetBoard()
         {
             Board = new Board(Consts.BOARD_WIDTH, Consts.BOARD_HEIGHT);
+            _referee = new Referee();
+            _boardHistory = new BoardHistory();
         }
 
         //Check if the move is valid in the specified position
         public bool IsMoveValid(Vector2Int position)
         {
+            Vector2Int boardBounds = Board.GetBounds();
+
+            //The bounds in the game are [3, 3] (pure length and not zero-indexed)
+            // Players should not be able to pick a move outside of bounds
+            if (position.x >= boardBounds.x || position.y >= boardBounds.y)
+            {
+                throw new System.Exception($"[GameBoardManager] - Invalid move attempt - position { position }  is outside of bounds");
+            }
+
             return Board.IsCellEmpty(position);
         }
 
@@ -35,7 +46,7 @@ namespace TicTacToe.GameProgression
 
         public BoardState CheckBoardState()
         {
-            return _referee.CheckBoard(Board);
+            return _referee.CheckBoardState(Board.cells);
         }
         
         public void UndoLastMove()

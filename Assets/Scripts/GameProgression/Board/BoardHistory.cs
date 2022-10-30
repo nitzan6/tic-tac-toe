@@ -7,6 +7,11 @@ namespace TicTacToe.GameProgression
     {
         private Stack<Vector2Int> _moveHistory;
 
+        public BoardHistory()
+        {
+            _moveHistory = new Stack<Vector2Int>();
+        }
+
         public void AddToHistory(Vector2Int move)
         {
             _moveHistory.Push(move);
