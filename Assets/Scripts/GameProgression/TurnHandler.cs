@@ -9,9 +9,9 @@ namespace TicTacToe.GameProgression
         private IPlayer _playerX;
         private IPlayer _playerO;
         private Timer _timer;
+        private bool _isXTurn;
 
-        public event Action OnTurnEndedWithoutPlay;
-        public bool IsXTurn { get; private set; }
+        public event Action<Symbol> OnTurnEndedWithoutPlay;
 
         void Awake()
         {
@@ -28,55 +28,38 @@ namespace TicTacToe.GameProgression
             _playerX = playerX;
             _playerO = playerO;
 
-            SubscribeToPlayersEvents();
             StartFirstTurn();
         }
 
         public void StartFirstTurn()
         {
-            IsXTurn = true; // X starts first
+            _isXTurn = true; // X starts first
             _timer.StartTimer();
             NotifyPlayers();
         }
-        
+
+        public void ChangeTurns()
+        {
+            _isXTurn = !_isXTurn;
+            _timer.ResetTimer();
+            NotifyPlayers();
+        }
+
         private void HandleTimerFinished()
         {
-            OnTurnEndedWithoutPlay?.Invoke();
+            OnTurnEndedWithoutPlay?.Invoke(_isXTurn ? Symbol.X : Symbol.O);
         }
 
         private void NotifyPlayers()
         {
-            if (IsXTurn)
-            {
-                _playerX.TurnStarts();
-            }
-            else
-            {
-                _playerO.TurnStarts();
-            }
-        }
+            Symbol currentPlayingSymbol = _isXTurn ? Symbol.X : Symbol.O;
 
-        private void SubscribeToPlayersEvents()
-        {
-            _playerX.OnChooseMove += HandleMove;
-            _playerO.OnChooseMove += HandleMove;
-        }
-
-        public void ChangeTurn()
-        {
-            IsXTurn = !IsXTurn;
-        }
-
-        private void HandleMove(Vector2Int position, Symbol symbol)
-        {
-            ChangeTurn();
+            _playerX.ReceiveTurnInformation(currentPlayingSymbol);
+            _playerX.ReceiveTurnInformation(currentPlayingSymbol);
         }
 
         void OnDisable()
         {
-            _playerX.OnChooseMove -= HandleMove;
-            _playerO.OnChooseMove -= HandleMove;
-
             _timer.OnTimerFinished -= HandleTimerFinished;
         }
     }
