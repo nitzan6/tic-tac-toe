@@ -45,6 +45,12 @@ namespace TicTacToe.GameProgression
             NotifyPlayers();
         }
 
+        public void EndTurnCycle()
+        {
+            _timer.StopTimer();
+            Debug.Log("Notify players that game has ended");
+        }
+
         private void HandleTimerFinished()
         {
             OnTurnEndedWithoutPlay?.Invoke(_isXTurn ? Symbol.X : Symbol.O);
@@ -55,7 +61,7 @@ namespace TicTacToe.GameProgression
             Symbol currentPlayingSymbol = _isXTurn ? Symbol.X : Symbol.O;
 
             _playerX.ReceiveTurnInformation(currentPlayingSymbol);
-            _playerX.ReceiveTurnInformation(currentPlayingSymbol);
+            _playerO.ReceiveTurnInformation(currentPlayingSymbol);
         }
 
         void OnDisable()

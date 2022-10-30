@@ -46,7 +46,19 @@ namespace TicTacToe.GameProgression
 
         public BoardState CheckBoardState()
         {
-            return _referee.CheckBoardState(Board.cells);
+            Symbol? winner = _referee.CheckWinner(Board.Cells);
+
+            if (winner != null)
+            {
+                return winner == Symbol.X ? BoardState.X_WIN : BoardState.O_WIN;
+            }
+            
+            if (_referee.IsDraw(Board.Cells))
+            {
+                return BoardState.DRAW;
+            }
+
+            return BoardState.PLAYING;
         }
         
         public void UndoLastMove()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TicTacToe.GameManagement.Players;
+using TicTacToe.GameManagement;
 
 namespace TicTacToe.GameProgression
 {
@@ -86,6 +87,9 @@ namespace TicTacToe.GameProgression
 
         private void HandleGameEnd(BoardState boardState) 
         {
+            GameEvents.Instance.GameEnded();
+            _turnHandler.EndTurnCycle();
+
             switch (boardState)
             {
                 case BoardState.X_WIN:
