@@ -1,3 +1,4 @@
+using System.Collections;
 using TicTacToe.GameManagement;
 using TicTacToe.GameProgression;
 using UnityEngine;
@@ -18,15 +19,16 @@ namespace TicTacToe.GameManagment
             GameEvents.Instance.onStartGame += () => Debug.Log("TEST");
         }
 
-        void Start()
+        IEnumerator Start()
         {
+            yield return null;
             StartGame();
         }
 
         private void StartGame()
         {
             GameEvents.Instance.StartGame();
-            _gameProgressionHandler.HandleGameStart();
+            _gameProgressionHandler.StartGame();
         }
 
         private void RestartGame()

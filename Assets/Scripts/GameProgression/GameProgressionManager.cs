@@ -9,6 +9,7 @@ namespace TicTacToe.GameProgression
         private TurnHandler _turnHandler;
         private IPlayer _player1;
         private IPlayer _player2;
+        private BoardState _boardState;
 
         void Start()
         {
@@ -23,14 +24,44 @@ namespace TicTacToe.GameProgression
             _player1 = GameObject.Find(Consts.PLAYER_1_NAME).GetComponent<IPlayer>();
             _player2 = GameObject.Find(Consts.PLAYER_2_NAME).GetComponent<IPlayer>();
 
+            SubscribeToEvents();
         }
 
-        void OnEnable()
+        private void SubscribeToEvents()
         {
             _player1.OnChooseMove += HandleMove;
             _player2.OnChooseMove += HandleMove;
 
             _turnHandler.OnTurnEndedWithoutPlay += DeclareWinner;
+        }
+
+        public void StartGame()
+        {
+            _gameBoardManager.ResetBoard();
+
+            AssignRolesForPlayers();
+            SetBoardForPlayers();
+            InitTurnHandler();
+            _turnHandler.StartFirstTurn();
+        }
+
+        private void SetBoardForPlayers()
+        {
+            //Give each of the players a reference of the board.
+            _player1.GameBoard = _gameBoardManager.Board;
+            _player2.GameBoard = _gameBoardManager.Board;
+        }
+
+        private void InitTurnHandler()
+        {
+            if (_player1.Symbol == Symbol.X)
+            {
+                _turnHandler.SetPlayers(_player1, _player2);
+            }
+            else
+            {
+                _turnHandler.SetPlayers(_player2, _player1);
+            }
         }
 
         private void HandleMove(Vector2Int position, Symbol symbol)
@@ -41,34 +72,47 @@ namespace TicTacToe.GameProgression
             }
 
             _gameBoardManager.MakeMove(position, symbol);
-            _turnHandler.ChangeTurn();
-        }
 
-        private void DeclareWinner()
-        {
-
-        }
-
-        public void HandleGameStart()
-        {
-            AssignRoles();
-            _turnHandler.StartFirstTurn();
-
-
-
-            /*
-            if (_player1.Symbol == Symbol.X)
+            BoardState currentBoardState = _gameBoardManager.CheckBoardState();
+            if (currentBoardState != BoardState.PLAYING)
             {
-                _turnHandler.SetPlayers(_player1, _player2);
+                HandleGameEnd(currentBoardState);
             }
             else
             {
-                _turnHandler.SetPlayers(_player2, _player1);
+                _turnHandler.ChangeTurns();
             }
-            */
         }
 
-        private void AssignRoles()
+        private void HandleGameEnd(BoardState boardState) 
+        {
+            switch (boardState)
+            {
+                case BoardState.X_WIN:
+                    DeclareWinner(Symbol.X);
+                    break;
+                case BoardState.O_WIN:
+                    DeclareWinner(Symbol.O);
+                    break;
+                case BoardState.DRAW:
+                    DeclareDraw();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void DeclareDraw()
+        {
+            Debug.Log("DRAW");
+        }
+
+        private void DeclareWinner(Symbol winner)
+        {
+            Debug.Log("The winner is " + winner);
+        }
+
+        private void AssignRolesForPlayers()
         {
             System.Random random = new System.Random();
 
@@ -91,6 +135,8 @@ namespace TicTacToe.GameProgression
         {
             _player1.OnChooseMove -= HandleMove;
             _player2.OnChooseMove -= HandleMove;
+
+            _turnHandler.OnTurnEndedWithoutPlay -= DeclareWinner;
         }
     }
 }
