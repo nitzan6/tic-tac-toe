@@ -19,6 +19,12 @@ namespace TicTacToe.GameManagement
             onStartGame?.Invoke();
         }
 
+        public event Action onRestartGame;
+        public void RestartGame()
+        {
+            onRestartGame?.Invoke();
+        }
+
         public event Action onGameEnded;
         public void GameEnded()
         {
