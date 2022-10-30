@@ -6,30 +6,35 @@ namespace TicTacToe.GameManagement.Players
 {
     public class LocalPlayer : MonoBehaviour, IPlayer
     {
-        private GameBoardManager _gameBoardManager;
-
         public Symbol Symbol { get; set; }
-        public event Action<Vector2Int, Symbol> OnChooseMove;
-        private bool _isMyTurn = false;
+        public Board GameBoard { get; set; }
 
-        void Awake()
-        {
-            _gameBoardManager = FindObjectOfType<GameBoardManager>();
-        }
+        public event Action<Vector2Int, Symbol> OnChooseMove;
+        private bool _canPlay = false;
 
         void OnEnable()
         {
             GameEvents.Instance.onCellClicked += HandlePlayerInput;
         }
 
-        public void TurnStarts()
+        public void ReceiveTurnInformation(Symbol currentTurnSymbol)
         {
-
+            _canPlay = Symbol == currentTurnSymbol; //Is the current symbol my symbol?
         }
 
-        public void HandlePlayerInput(Vector2Int cell)
+        public void HandlePlayerInput(Vector2Int cellPosition)
         {
+            if (!_canPlay)
+            {
+                return;
+            }
 
+            if (!GameBoard.IsCellEmpty(cellPosition))
+            {
+                return;
+            }
+
+            OnChooseMove?.Invoke(cellPosition, Symbol);
         }
 
         void OnDisable()
