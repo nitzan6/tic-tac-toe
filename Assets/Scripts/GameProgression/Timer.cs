@@ -17,7 +17,12 @@ namespace TicTacToe.GameProgression
             _isTimerActive = true;
         }
 
-        public void RestartTimer()
+        public void StopTimer()
+        {
+            _isTimerActive = false;
+        }
+
+        public void ResetTimer()
         {
             _countedTime = 0;
         }
@@ -35,7 +40,7 @@ namespace TicTacToe.GameProgression
 
                 if (_countedTime >= MaxTimePerTurn)
                 {
-                    RestartTimer();
+                    ResetTimer();
                     _isTimerActive = false;
 
                     OnTimerFinished?.Invoke();
