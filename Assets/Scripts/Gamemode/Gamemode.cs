@@ -21,6 +21,11 @@ namespace TicTacToe.GameManagement.Gamemodes
             Player2Type = player2Type;
         }
 
+        public bool IsGameModeVsComputer()
+        {
+            return Player1Type == typeof(AI) || Player2Type == typeof(AI);
+        }
+
         public readonly Type Player1Type;
         public readonly Type Player2Type;
     }

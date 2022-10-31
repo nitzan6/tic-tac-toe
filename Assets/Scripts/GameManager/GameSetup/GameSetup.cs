@@ -15,7 +15,6 @@ namespace TicTacToe.GameManagement.Setup
         {
             _gamemodeHandler = GetComponent<GamemodeHandler>();
             _timeHandler = GetComponent<TimeSettingsHandler>();
-
             ApplySettings();
         }
 
