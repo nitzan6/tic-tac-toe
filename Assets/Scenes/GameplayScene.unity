@@ -654,7 +654,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &583045229
 RectTransform:
   m_ObjectHideFlags: 0
@@ -718,7 +718,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 583045231}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1835657729}
+        m_TargetAssemblyTypeName: TicTacToe.GameProgression.GameProgressionManager,
+          Assembly-CSharp
+        m_MethodName: UndoLastMove
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &583045231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1173,6 +1186,7 @@ GameObject:
   - component: {fileID: 1732451340}
   - component: {fileID: 1732451342}
   - component: {fileID: 1732451341}
+  - component: {fileID: 1732451343}
   m_Layer: 0
   m_Name: GameSetup
   m_TagString: Untagged
@@ -1234,6 +1248,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player1: {fileID: 4237696}
   _player2: {fileID: 2013479166}
+  _undoManager: {fileID: 1732451343}
+--- !u!114 &1732451343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732451338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd66df8aecd59f4ea26037d92a8331c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _undoButton: {fileID: 583045228}
 --- !u!1 &1822277443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1429,7 +1457,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1860553739}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 745447399}
+        m_TargetAssemblyTypeName: TicTacToe.GameManagment.GameManager, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1860553739
 MonoBehaviour:
   m_ObjectHideFlags: 0
