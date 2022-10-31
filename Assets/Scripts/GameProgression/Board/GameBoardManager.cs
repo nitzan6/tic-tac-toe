@@ -44,21 +44,21 @@ namespace TicTacToe.GameProgression
             GameEvents.Instance.MadeMove(position, symbol);
         }
 
-        public BoardState CheckBoardState()
+        public GameState GetGameState()
         {
             Symbol? winner = _referee.CheckWinner(Board.Cells);
 
             if (winner != null)
             {
-                return winner == Symbol.X ? BoardState.X_WIN : BoardState.O_WIN;
+                return winner == Symbol.X ? GameState.X_WIN : GameState.O_WIN;
             }
             
             if (_referee.IsDraw(Board.Cells))
             {
-                return BoardState.DRAW;
+                return GameState.DRAW;
             }
 
-            return BoardState.PLAYING;
+            return GameState.PLAYING;
         }
         
         public void UndoLastMove()
@@ -68,7 +68,10 @@ namespace TicTacToe.GameProgression
                 return;
             }
 
+            Vector2Int lastMovePosition = _boardHistory.RemoveLastMove();
+            Board.ClearCell(lastMovePosition);
 
+            GameEvents.Instance.UndoLastMove(lastMovePosition);
         }
 
     }
