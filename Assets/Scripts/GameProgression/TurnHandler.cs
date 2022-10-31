@@ -9,10 +9,10 @@ namespace TicTacToe.GameProgression
         private IPlayer _playerX;
         private IPlayer _playerO;
         private Timer _timer;
-        private Symbol _currentTurnSymbol;
+        public enSymbol CurrentTurnSymbol { get; private set; }
         private int _turnCount = 0;
 
-        public event Action<Symbol> OnTurnEndedWithoutPlay;
+        public event Action<enSymbol> OnTurnEndedWithoutPlay;
 
         void Awake()
         {
@@ -34,7 +34,7 @@ namespace TicTacToe.GameProgression
         //Start the turns cycle
         public void StartFirstTurn()
         {
-            _currentTurnSymbol = Symbol.X; // X starts first
+            CurrentTurnSymbol = enSymbol.X; // X starts first
             _timer.StartTimer();
             NotifyPlayers();
         }
@@ -42,9 +42,14 @@ namespace TicTacToe.GameProgression
         public void ChangeTurns()
         {
             _turnCount++;
-            _currentTurnSymbol = _currentTurnSymbol == Symbol.X ? Symbol.O : Symbol.X;
+            CurrentTurnSymbol = CurrentTurnSymbol == enSymbol.X ? enSymbol.O : enSymbol.X;
             _timer.ResetTimer();
             NotifyPlayers();
+        }
+
+        public bool CheckForNoTurnsMade()
+        {
+            return _turnCount == 0;
         }
 
         //In this context a round is 2 turns
@@ -73,15 +78,15 @@ namespace TicTacToe.GameProgression
 
         private void HandleTimerFinished()
         {
-            OnTurnEndedWithoutPlay?.Invoke(_currentTurnSymbol);
+            OnTurnEndedWithoutPlay?.Invoke(CurrentTurnSymbol);
         }
 
         //notify players of current turn information, so the players know 
         //if it's their turn or not
         private void NotifyPlayers()
         {
-            _playerX.ReceiveCurrentTurnInfo(_currentTurnSymbol);
-            _playerO.ReceiveCurrentTurnInfo(_currentTurnSymbol);
+            _playerX.ReceiveCurrentTurnInfo(CurrentTurnSymbol);
+            _playerO.ReceiveCurrentTurnInfo(CurrentTurnSymbol);
         }
 
         void OnDisable()
