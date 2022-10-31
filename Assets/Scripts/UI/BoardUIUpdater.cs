@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace TicTacToe.UI
 {
-    public class UIEventListener : MonoBehaviour
+    public class BoardUIUpdater : MonoBehaviour
     {
         [SerializeField]
         private Sprite _xSprite;
@@ -21,7 +21,7 @@ namespace TicTacToe.UI
         void OnEnable()
         {
             GameEvents.Instance.onMadeMove += UpdateBoardUI;
-            GameEvents.Instance.onGameRestart += ClearBoardUI;
+            GameEvents.Instance.onGameStart += ClearBoardUI;
         }
 
         private void UpdateBoardUI(Vector2Int position, Symbol symbol)
@@ -50,13 +50,14 @@ namespace TicTacToe.UI
             foreach (Image imageComponent in _cellsImageComponents)
             {
                 imageComponent.sprite = null;
+                imageComponent.color = new Color(1, 1, 1 ,0);
             }
         }
 
         void OnDisable()
         {
             GameEvents.Instance.onMadeMove -= UpdateBoardUI;
-            GameEvents.Instance.onGameRestart -= ClearBoardUI;
+            GameEvents.Instance.onGameStart -= ClearBoardUI;
         }
     }
 }
