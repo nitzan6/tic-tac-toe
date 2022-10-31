@@ -1,14 +1,22 @@
 using UnityEngine;
-using TicTacToe.GameManagement;
 
-public class Cell : MonoBehaviour
+namespace TicTacToe.UI
 {
-    [SerializeField]
-    private Vector2Int positionInBoard;
-
-    public void CellClicked()
+    public class Cell : MonoBehaviour
     {
-        Debug.Log("Clicked position " + positionInBoard);
-        GameEvents.Instance.CellClicked(positionInBoard);
+        [SerializeField]
+        private Vector2Int positionInBoard;
+        private LocalInputHandler _localInputHandler;
+
+        void Awake()
+        {
+            _localInputHandler = GetComponentInParent<LocalInputHandler>();
+        }
+
+        public void CellClicked()
+        {
+            _localInputHandler.OnCellClicked(positionInBoard);
+        }
     }
 }
+
