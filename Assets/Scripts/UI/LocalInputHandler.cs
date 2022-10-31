@@ -25,7 +25,7 @@ namespace TicTacToe.UI
             _isRegisteringInput = true;
         }
 
-        private void DisableInput(GameState _)
+        private void DisableInput(enGameState _)
         {
             _isRegisteringInput = false;
         }

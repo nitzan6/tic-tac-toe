@@ -1,5 +1,5 @@
 
-public enum GameState
+public enum enGameState
 {
     PLAYING,
     X_WIN,
@@ -7,7 +7,7 @@ public enum GameState
     DRAW
 }
 
-public enum Symbol
+public enum enSymbol
 {
     EMPTY = 0,
     X,
