@@ -11,6 +11,7 @@ namespace TicTacToe.GameProgression
         private IPlayer _player1;
         private IPlayer _player2;
         private GameState _gameState;
+        private UndoManager _undoManager;
 
         public event Action<GameState> OnGameEnded;
 
@@ -23,9 +24,12 @@ namespace TicTacToe.GameProgression
         {
             _gameBoardManager = GetComponent<GameBoardManager>();
             _turnHandler = GetComponent<TurnHandler>();
+            _undoManager = FindObjectOfType<UndoManager>();
 
             _player1 = GameObject.Find(Consts.PLAYER_1_NAME).GetComponent<IPlayer>();
             _player2 = GameObject.Find(Consts.PLAYER_2_NAME).GetComponent<IPlayer>();
+
+            AssignNamesForPlayers();
 
             SubscribeToEvents();
         }
@@ -45,6 +49,7 @@ namespace TicTacToe.GameProgression
             AssignRolesForPlayers();
             SetBoardForPlayers();
             InitTurnHandler();
+
             _turnHandler.StartFirstTurn();
         }
 
@@ -86,6 +91,17 @@ namespace TicTacToe.GameProgression
             }
         }
 
+        public void UndoLastMove()
+        {
+            if (!_undoManager.CanUndo)
+            {
+                return;
+            }
+            
+            _gameBoardManager.UndoLastMove();
+            _turnHandler.RevertToLastRound();
+        }
+
         private bool GetIsGameEnded()
         {
             _gameState = _gameBoardManager.GetGameState();
@@ -111,6 +127,12 @@ namespace TicTacToe.GameProgression
             OnGameEnded?.Invoke(gameState);
         }
 
+        private void AssignNamesForPlayers()
+        {
+            _player1.Name = Consts.PLAYER_1_NAME;
+            _player2.Name = Consts.PLAYER_2_NAME;
+        }
+
         private void AssignRolesForPlayers()
         {
             System.Random random = new System.Random();
@@ -122,7 +144,6 @@ namespace TicTacToe.GameProgression
             {
                 _player1.Symbol = Symbol.X;
                 _player2.Symbol = Symbol.O;
-                
             }
             else
             {
