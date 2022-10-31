@@ -1,5 +1,5 @@
 
-public enum BoardState
+public enum GameState
 {
     PLAYING,
     X_WIN,
