@@ -10,36 +10,21 @@ namespace TicTacToe.GameManagement.Players
         public Board GameBoard { get; set; }
 
         public event Action<Vector2Int, Symbol> OnChooseMove;
-        private bool _canPlay = false;
+        public bool IsCanPlay { get; private set; } = false;
 
-        void OnEnable()
+        public void ReceiveCurrentTurnInfo(Symbol currentTurnSymbol)
         {
-            GameEvents.Instance.onCellClicked += HandlePlayerInput;
-        }
-
-        public void ReceiveTurnInformation(Symbol currentTurnSymbol)
-        {
-            _canPlay = Symbol == currentTurnSymbol; //Is the current symbol my symbol?
+            IsCanPlay = Symbol == currentTurnSymbol; //Is the current symbol my symbol?
         }
 
         public void HandlePlayerInput(Vector2Int cellPosition)
         {
-            if (!_canPlay)
-            {
-                return;
-            }
-
             if (!GameBoard.IsCellEmpty(cellPosition))
             {
                 return;
             }
 
             OnChooseMove?.Invoke(cellPosition, Symbol);
-        }
-
-        void OnDisable()
-        {
-            GameEvents.Instance.onCellClicked -= HandlePlayerInput;
         }
     }
 

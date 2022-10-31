@@ -8,13 +8,12 @@ namespace TicTacToe.GameManagement.Players
     public class AI : MonoBehaviour, IPlayer
     {
         // a few second delay for the AI to wait before
-        // choosing a move, to give the game a more realistic feel
+        // choosing a move, to give the feeling as if playing against a real opponent
         private float _delayInSeconds = 2f;
         private System.Random _random;
 
         public Symbol Symbol { get; set; }
         public Board GameBoard { get; set; }
-
         public event Action<Vector2Int, Symbol> OnChooseMove;
 
         void Start()
@@ -26,10 +25,10 @@ namespace TicTacToe.GameManagement.Players
         {
             // This is done to prevent a situation where the coroutine for determining a move is
             // Still active after we finished the game
-            GameEvents.Instance.onGameEnded += StopCoroutines;
+            GameEvents.Instance.onGameEnded += StopDeterminingNextMove;
         }
 
-        public void ReceiveTurnInformation(Symbol currentTurnSymbol)
+        public void ReceiveCurrentTurnInfo(Symbol currentTurnSymbol)
         {
             if (Symbol != currentTurnSymbol) // Is it my turn to play or not?
             {
@@ -44,18 +43,26 @@ namespace TicTacToe.GameManagement.Players
             //Wait for the amount specified in the delay
             yield return new WaitForSeconds(_delayInSeconds);
 
-            Vector2Int chosenCellPosition = new Vector2Int(_random.Next(0, 3), _random.Next(0, 3));
+            bool isChosenValidCell = false;
+            Vector2Int chosenCellPosition = new Vector2Int();
+
+            while (!isChosenValidCell)
+            {
+                chosenCellPosition = new Vector2Int(_random.Next(0, Consts.BOARD_WIDTH), _random.Next(0, Consts.BOARD_HEIGHT));
+                isChosenValidCell = GameBoard.IsCellEmpty(chosenCellPosition);
+            }
+
             OnChooseMove?.Invoke(chosenCellPosition, Symbol);
+        }
+
+        private void StopDeterminingNextMove(BoardState _)
+        {
+            StopAllCoroutines();
         }
 
         void OnDisable()
         {
-            GameEvents.Instance.onGameEnded -= StopCoroutines;
-        }
-
-        private void StopCoroutines()
-        {
-            StopAllCoroutines();
+            GameEvents.Instance.onGameEnded -= StopDeterminingNextMove;
         }
     }
 }
