@@ -6,7 +6,7 @@ namespace TicTacToe.GameProgression
     public class Timer : MonoBehaviour
     {
         [HideInInspector]
-        public float MaxTimePerTurn;
+        public float TimeLimit;
 
         private bool _isTimerActive = false;
         private float _countedTime;
@@ -39,7 +39,7 @@ namespace TicTacToe.GameProgression
             {
                 _countedTime += Time.deltaTime;
 
-                if (_countedTime >= MaxTimePerTurn)
+                if (_countedTime >= TimeLimit)
                 {
                     ResetTimer();
                     _isTimerActive = false;
