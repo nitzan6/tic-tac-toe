@@ -9,7 +9,7 @@ namespace TicTacToe.GameManagement.Players
     {
         // a few second delay for the AI to wait before
         // choosing a move, to give the feeling as if playing against a real opponent
-        private float _delayInSeconds = 2f;
+        private float _delayInSeconds = 1f;
         private System.Random _random;
 
         public Symbol Symbol { get; set; }
@@ -24,8 +24,8 @@ namespace TicTacToe.GameManagement.Players
         void OnEnable()
         {
             // This is done to prevent a situation where the coroutine for determining a move is
-            // Still active after we finished the game
-            GameEvents.Instance.onGameEnded += StopDeterminingNextMove;
+            // Still active after we finished/restarted the game
+            GameEvents.Instance.onGameStart += StopCoroutines;
         }
 
         public void ReceiveCurrentTurnInfo(Symbol currentTurnSymbol)
@@ -55,14 +55,14 @@ namespace TicTacToe.GameManagement.Players
             OnChooseMove?.Invoke(chosenCellPosition, Symbol);
         }
 
-        private void StopDeterminingNextMove(BoardState _)
+        private void StopCoroutines()
         {
             StopAllCoroutines();
         }
 
         void OnDisable()
         {
-            GameEvents.Instance.onGameEnded -= StopDeterminingNextMove;
+            GameEvents.Instance.onGameStart -= StopCoroutines;
         }
     }
 }
