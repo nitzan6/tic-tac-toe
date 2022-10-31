@@ -26,9 +26,9 @@ namespace TicTacToe.UI
             GameEvents.Instance.onUndoLastMove += ClearCell;
         }
 
-        private void UpdateBoardUI(Vector2Int position, Symbol symbol)
+        private void UpdateBoardUI(Vector2Int position, enSymbol symbol)
         {
-            if (symbol == Symbol.X)
+            if (symbol == enSymbol.X)
             {
                 LoadSprite(position, _xSprite);
                 return;

@@ -17,18 +17,20 @@ namespace TicTacToe.GameProgression
             _moveHistory.Push(move);
         }
 
-        public List<Vector2Int> RemoveLastMove()
+        
+        public List<Vector2Int> GetAndRemoveLastMoves(int numberOfMoves)
         {
             List<Vector2Int> lastMoveCellPositions = new List<Vector2Int>();
 
-            if (_moveHistory.Count == 1)
+            for (int i = 0; i < numberOfMoves; i++)
             {
-                lastMoveCellPositions.Add(_moveHistory.Pop());
-                return lastMoveCellPositions;
-            }
+                if (IsEmpty())
+                {
+                    return lastMoveCellPositions;
+                }
 
-            lastMoveCellPositions.Add(_moveHistory.Pop());
-            lastMoveCellPositions.Add(_moveHistory.Pop());
+                lastMoveCellPositions.Add(_moveHistory.Pop());
+            }
 
             return lastMoveCellPositions;
         }

@@ -5,16 +5,11 @@ namespace TicTacToe.GameProgression
 {
     public class Board
     {
-        public Symbol[,] Cells { get; private set; }
+        public enSymbol[,] Cells { get; private set; }
 
         public Board(int width, int height)
         {
-            Cells = new Symbol[width, height];
-        }
-
-        public Board(Symbol[,] cells)
-        {
-            Cells = cells;
+            Cells = new enSymbol[width, height];
         }
 
         public Vector2Int GetBounds()
@@ -28,7 +23,7 @@ namespace TicTacToe.GameProgression
             {
                 for (int j = 0; j < Cells.GetLength(1); j++)
                 {
-                    if (Cells[i,j] != Symbol.EMPTY)
+                    if (Cells[i,j] != enSymbol.EMPTY)
                     {
                         return false;
                     }
@@ -38,24 +33,24 @@ namespace TicTacToe.GameProgression
             return true;
         }
 
-        public void InsertElement(Vector2Int position, Symbol element)
+        public void InsertElement(Vector2Int position, enSymbol element)
         {
             Cells[position.x, position.y] = element;
         }
 
         public bool IsCellEmpty(Vector2Int position)
         {
-            return Cells[position.x, position.y] == Symbol.EMPTY;
+            return Cells[position.x, position.y] == enSymbol.EMPTY;
         }
 
-        public Symbol GetSymbol(Vector2Int position)
+        public enSymbol GetSymbol(Vector2Int position)
         {
             return Cells[position.x, position.y];
         }
 
         public void ClearCell(Vector2Int position)
         {
-            Cells[position.x, position.y] = Symbol.EMPTY;
+            Cells[position.x, position.y] = enSymbol.EMPTY;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace TicTacToe.GameProgression
             return Board.IsCellEmpty(position);
         }
 
-        public void MakeMove(Vector2Int position, Symbol symbol)
+        public void MakeMove(Vector2Int position, enSymbol symbol)
         {
             if (!IsMoveValid(position))
             {
@@ -45,21 +45,21 @@ namespace TicTacToe.GameProgression
             GameEvents.Instance.MadeMove(position, symbol);
         }
 
-        public GameState GetGameState()
+        public enGameState GetGameState()
         {
-            Symbol? winner = _referee.CheckWinner(Board.Cells);
+            enSymbol winner = _referee.GetWinner(Board.Cells);
 
-            if (winner != null)
+            if (winner != enSymbol.EMPTY)
             {
-                return winner == Symbol.X ? GameState.X_WIN : GameState.O_WIN;
+                return winner == enSymbol.X ? enGameState.X_WIN : enGameState.O_WIN;
             }
             
-            if (_referee.IsDraw(Board.Cells))
+            if (_referee.CheckDraw(Board.Cells))
             {
-                return GameState.DRAW;
+                return enGameState.DRAW;
             }
 
-            return GameState.PLAYING;
+            return enGameState.PLAYING;
         }
         
         public void UndoLastMove()
@@ -69,7 +69,7 @@ namespace TicTacToe.GameProgression
                 return;
             }
 
-            List<Vector2Int> lastMovePositions = _boardHistory.RemoveLastMove();
+            List<Vector2Int> lastMovePositions = _boardHistory.GetAndRemoveLastMoves(2);
 
             foreach (Vector2Int position in lastMovePositions)
             {
