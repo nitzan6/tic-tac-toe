@@ -7,16 +7,12 @@ namespace TicTacToe.GameManagment
 {
     public class GameManager : MonoBehaviour
     {
-        private GameProgressionManager _gameProgressionHandler;
+        private GameProgressionManager _gameProgressionManager;
 
         void Awake()
         {
-            _gameProgressionHandler = GetComponentInChildren<GameProgressionManager>();
-        }
-
-        void OnEnable()
-        {
-            GameEvents.Instance.onGameStart += () => Debug.Log("TEST");
+            _gameProgressionManager = GetComponentInChildren<GameProgressionManager>();
+            _gameProgressionManager.OnGameEnded += HandleGameEnd;
         }
 
         IEnumerator Start()
@@ -25,15 +21,35 @@ namespace TicTacToe.GameManagment
             StartGame();
         }
 
-        private void StartGame()
+        public void StartGame()
         {
             GameEvents.Instance.GameStart();
-            _gameProgressionHandler.StartGame();
+            _gameProgressionManager.StartGame();
         }
 
-        private void RestartGame()
+        private void HandleGameEnd(GameState gameResult)
         {
+            GameEvents.Instance.GameEnded(gameResult);
 
+            switch (gameResult)
+            {
+                case GameState.X_WIN:
+                    Debug.Log("X WIN");
+                    break;
+                case GameState.O_WIN:
+                    Debug.Log("O WIN");
+                    break;
+                case GameState.DRAW:
+                    Debug.Log("DRAW");
+                    break;
+                default:
+                    throw new System.Exception($"[GameManager] - Unhandled {gameResult.GetType()} {gameResult}");
+            }
+        }
+
+        void OnDisable()
+        {
+            _gameProgressionManager.OnGameEnded -= HandleGameEnd;
         }
     }
 }

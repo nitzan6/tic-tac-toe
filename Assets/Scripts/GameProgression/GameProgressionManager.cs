@@ -1,6 +1,6 @@
+using System;
 using UnityEngine;
 using TicTacToe.GameManagement.Players;
-using TicTacToe.GameManagement;
 
 namespace TicTacToe.GameProgression
 {
@@ -10,6 +10,9 @@ namespace TicTacToe.GameProgression
         private TurnHandler _turnHandler;
         private IPlayer _player1;
         private IPlayer _player2;
+        private GameState _gameState;
+
+        public event Action<GameState> OnGameEnded;
 
         void Start()
         {
@@ -32,13 +35,11 @@ namespace TicTacToe.GameProgression
             _player1.OnChooseMove += HandleMove;
             _player2.OnChooseMove += HandleMove;
 
-            _turnHandler.OnTurnEndedWithoutPlay += DeclareWinner;
+            _turnHandler.OnTurnEndedWithoutPlay += HandlePlayerOutOfTime;
         }
 
         public void StartGame()
         {
-            GameEvents.Instance.GameStart();
-
             _gameBoardManager.ResetBoard();
 
             AssignRolesForPlayers();
@@ -75,10 +76,9 @@ namespace TicTacToe.GameProgression
 
             _gameBoardManager.MakeMove(position, symbol);
 
-            BoardState currentBoardState = _gameBoardManager.CheckBoardState();
-            if (currentBoardState != BoardState.PLAYING)
+            if (GetIsGameEnded())
             {
-                HandleGameEnd(currentBoardState);
+                HandleGameEnd(_gameState);
             }
             else
             {
@@ -86,35 +86,29 @@ namespace TicTacToe.GameProgression
             }
         }
 
-        private void HandleGameEnd(BoardState boardState) 
+        private bool GetIsGameEnded()
+        {
+            _gameState = _gameBoardManager.GetGameState();
+
+            if (_gameState != GameState.PLAYING)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void HandlePlayerOutOfTime(Symbol currentTurnSymbol)
+        {
+            //if the player is out of time, the other wins.
+            _gameState = currentTurnSymbol == Symbol.X ? GameState.O_WIN : GameState.X_WIN;
+            HandleGameEnd(_gameState);
+        }
+
+        private void HandleGameEnd(GameState gameState)
         {
             _turnHandler.EndTurnCycle();
-            GameEvents.Instance.GameEnded(boardState);
-
-            switch (boardState)
-            {
-                case BoardState.X_WIN:
-                    DeclareWinner(Symbol.X);
-                    break;
-                case BoardState.O_WIN:
-                    DeclareWinner(Symbol.O);
-                    break;
-                case BoardState.DRAW:
-                    DeclareDraw();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void DeclareDraw()
-        {
-            Debug.Log("DRAW");
-        }
-
-        private void DeclareWinner(Symbol winner)
-        {
-            Debug.Log("The winner is " + winner);
+            OnGameEnded?.Invoke(gameState);
         }
 
         private void AssignRolesForPlayers()
@@ -142,7 +136,7 @@ namespace TicTacToe.GameProgression
             _player1.OnChooseMove -= HandleMove;
             _player2.OnChooseMove -= HandleMove;
 
-            _turnHandler.OnTurnEndedWithoutPlay -= DeclareWinner;
+            _turnHandler.OnTurnEndedWithoutPlay -= HandlePlayerOutOfTime;
         }
     }
 }
