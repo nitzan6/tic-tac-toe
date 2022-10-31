@@ -14,6 +14,8 @@ namespace TicTacToe.GameManagement.Players
 
         public Symbol Symbol { get; set; }
         public Board GameBoard { get; set; }
+        public string Name { get; set; }
+
         public event Action<Vector2Int, Symbol> OnChooseMove;
 
         void Start()

@@ -11,6 +11,7 @@ namespace TicTacToe.GameManagement.Players
 
         public event Action<Vector2Int, Symbol> OnChooseMove;
         public bool IsCanPlay { get; private set; } = false;
+        public string Name { get; set; }
 
         public void ReceiveCurrentTurnInfo(Symbol currentTurnSymbol)
         {

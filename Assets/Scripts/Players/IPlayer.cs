@@ -14,6 +14,10 @@ namespace TicTacToe.GameManagement.Players
         //For getting notified on the current turn - whose turn it is
         public void ReceiveCurrentTurnInfo(Symbol currentTurnSymbol);
 
+        //The player name
+        string Name { get; set; }
+
+        //A reference to the game board for move validations
         Board GameBoard { get; set; }
 
         // every player is assigned a symbol, which is either X or O.
