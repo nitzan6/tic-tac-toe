@@ -13,34 +13,28 @@ namespace TicTacToe.GameManagement
             Instance = this;
         }
 
-        public event Action onStartGame;
-        public void StartGame()
+        public event Action onGameStart;
+        public void GameStart()
         {
-            onStartGame?.Invoke();
+            onGameStart?.Invoke();
         }
 
-        public event Action onRestartGame;
-        public void RestartGame()
+        public event Action onGameRestart;
+        public void GameRestart()
         {
-            onRestartGame?.Invoke();
+            onGameRestart?.Invoke();
         }
 
-        public event Action onGameEnded;
-        public void GameEnded()
+        public event Action<BoardState> onGameEnded;
+        public void GameEnded(BoardState boardState)
         {
-            onGameEnded?.Invoke();
+            onGameEnded?.Invoke(boardState);
         }
 
         public event Action<Vector2Int, Symbol> onMadeMove;
         public void MadeMove(Vector2Int position, Symbol symbol)
         {
             onMadeMove?.Invoke(position, symbol);
-        }
-
-        public event Action<Vector2Int> onCellClicked;
-        public void CellClicked(Vector2Int position)
-        {
-            onCellClicked?.Invoke(position);
         }
 
         public event Action onUndoLastMove;
