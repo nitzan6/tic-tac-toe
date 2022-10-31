@@ -10,7 +10,6 @@ namespace TicTacToe.GameProgression
         private TurnHandler _turnHandler;
         private IPlayer _player1;
         private IPlayer _player2;
-        private BoardState _boardState;
 
         void Start()
         {
@@ -38,6 +37,8 @@ namespace TicTacToe.GameProgression
 
         public void StartGame()
         {
+            GameEvents.Instance.GameStart();
+
             _gameBoardManager.ResetBoard();
 
             AssignRolesForPlayers();
@@ -87,8 +88,8 @@ namespace TicTacToe.GameProgression
 
         private void HandleGameEnd(BoardState boardState) 
         {
-            GameEvents.Instance.GameEnded();
             _turnHandler.EndTurnCycle();
+            GameEvents.Instance.GameEnded(boardState);
 
             switch (boardState)
             {
@@ -127,6 +128,7 @@ namespace TicTacToe.GameProgression
             {
                 _player1.Symbol = Symbol.X;
                 _player2.Symbol = Symbol.O;
+                
             }
             else
             {

@@ -16,7 +16,7 @@ namespace TicTacToe.GameManagment
 
         void OnEnable()
         {
-            GameEvents.Instance.onStartGame += () => Debug.Log("TEST");
+            GameEvents.Instance.onGameStart += () => Debug.Log("TEST");
         }
 
         IEnumerator Start()
@@ -27,7 +27,7 @@ namespace TicTacToe.GameManagment
 
         private void StartGame()
         {
-            GameEvents.Instance.StartGame();
+            GameEvents.Instance.GameStart();
             _gameProgressionHandler.StartGame();
         }
 
