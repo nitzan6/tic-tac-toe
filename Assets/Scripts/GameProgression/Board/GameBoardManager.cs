@@ -1,5 +1,6 @@
 using UnityEngine;
 using TicTacToe.GameManagement;
+using System.Collections.Generic;
 
 namespace TicTacToe.GameProgression
 {
@@ -68,10 +69,14 @@ namespace TicTacToe.GameProgression
                 return;
             }
 
-            Vector2Int lastMovePosition = _boardHistory.RemoveLastMove();
-            Board.ClearCell(lastMovePosition);
+            List<Vector2Int> lastMovePositions = _boardHistory.RemoveLastMove();
 
-            GameEvents.Instance.UndoLastMove(lastMovePosition);
+            foreach (Vector2Int position in lastMovePositions)
+            {
+                Board.ClearCell(position);
+            }
+
+            GameEvents.Instance.UndoLastMove(lastMovePositions);
         }
 
     }
