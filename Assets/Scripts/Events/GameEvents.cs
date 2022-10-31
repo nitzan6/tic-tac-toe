@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TicTacToe.GameProgression;
 using UnityEngine;
 
@@ -37,8 +38,8 @@ namespace TicTacToe.GameManagement
             onMadeMove?.Invoke(position, symbol);
         }
 
-        public event Action<Vector2Int> onUndoLastMove;
-        public void UndoLastMove(Vector2Int lastMove)
+        public event Action<List<Vector2Int>> onUndoLastMove;
+        public void UndoLastMove(List<Vector2Int> lastMove)
         {
             onUndoLastMove?.Invoke(lastMove);
         }
