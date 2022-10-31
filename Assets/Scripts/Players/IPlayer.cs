@@ -9,10 +9,10 @@ namespace TicTacToe.GameManagement.Players
     {
         // this event will be invoked when the player chooses a valid cell,
         // and will pass the cell coordinates as an argument.
-        event Action<UnityEngine.Vector2Int, Symbol> OnChooseMove;
+        event Action<UnityEngine.Vector2Int, enSymbol> OnChooseMove;
 
         //For getting notified on the current turn - whose turn it is
-        public void ReceiveCurrentTurnInfo(Symbol currentTurnSymbol);
+        public void ReceiveCurrentTurnInfo(enSymbol currentTurnSymbol);
 
         //The player name
         string Name { get; set; }
@@ -21,6 +21,6 @@ namespace TicTacToe.GameManagement.Players
         Board GameBoard { get; set; }
 
         // every player is assigned a symbol, which is either X or O.
-        Symbol Symbol { get; set; }
+        enSymbol Symbol { get; set; }
     }
 }

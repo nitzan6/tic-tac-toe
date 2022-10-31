@@ -12,11 +12,11 @@ namespace TicTacToe.GameManagement.Players
         private float _delayInSeconds = 1f;
         private System.Random _random;
 
-        public Symbol Symbol { get; set; }
+        public enSymbol Symbol { get; set; }
         public Board GameBoard { get; set; }
         public string Name { get; set; }
 
-        public event Action<Vector2Int, Symbol> OnChooseMove;
+        public event Action<Vector2Int, enSymbol> OnChooseMove;
 
         void Start()
         {
@@ -30,7 +30,7 @@ namespace TicTacToe.GameManagement.Players
             GameEvents.Instance.onGameStart += StopCoroutines;
         }
 
-        public void ReceiveCurrentTurnInfo(Symbol currentTurnSymbol)
+        public void ReceiveCurrentTurnInfo(enSymbol currentTurnSymbol)
         {
             if (Symbol != currentTurnSymbol) // Is it my turn to play or not?
             {
