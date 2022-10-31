@@ -33,14 +33,14 @@ namespace TicTacToe.GameProgression
         {
             _isXTurn = true; // X starts first
             _timer.StartTimer();
-            NotifyPlayersOfCurrentTurn();
+            NotifyPlayers();
         }
 
         public void ChangeTurns()
         {
             _isXTurn = !_isXTurn;
             _timer.ResetTimer();
-            NotifyPlayersOfCurrentTurn();
+            NotifyPlayers();
         }
 
         public void EndTurnCycle()
@@ -53,7 +53,9 @@ namespace TicTacToe.GameProgression
             OnTurnEndedWithoutPlay?.Invoke(_isXTurn ? Symbol.X : Symbol.O);
         }
 
-        private void NotifyPlayersOfCurrentTurn()
+        //notify players of current turn information, so the players know 
+        //if it's their turn or not
+        private void NotifyPlayers()
         {
             Symbol currentPlayingSymbol = _isXTurn ? Symbol.X : Symbol.O;
 
