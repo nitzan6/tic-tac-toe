@@ -10,10 +10,10 @@ namespace TicTacToe.GameProgression
         private TurnHandler _turnHandler;
         private IPlayer _player1;
         private IPlayer _player2;
-        private GameState _gameState;
+        private enGameState _gameState;
         private UndoManager _undoManager;
 
-        public event Action<GameState> OnGameEnded;
+        public event Action<enGameState> OnGameEnded;
 
         void Start()
         {
@@ -26,19 +26,25 @@ namespace TicTacToe.GameProgression
             _turnHandler = GetComponent<TurnHandler>();
             _undoManager = FindObjectOfType<UndoManager>();
 
-            _player1 = GameObject.Find(Consts.PLAYER_1_NAME).GetComponent<IPlayer>();
-            _player2 = GameObject.Find(Consts.PLAYER_2_NAME).GetComponent<IPlayer>();
-
-            AssignNamesForPlayers();
-
-            SubscribeToEvents();
+            SubscribeToTurnHandlerEvents();
         }
 
-        private void SubscribeToEvents()
+        public void InitPlayers(IPlayer player1, IPlayer player2)
+        {
+            _player1 = player1;
+            _player2 = player2;
+
+            SubscribeToPlayerEvents();
+        }
+
+        private void SubscribeToPlayerEvents()
         {
             _player1.OnChooseMove += HandleMove;
             _player2.OnChooseMove += HandleMove;
+        }
 
+        private void SubscribeToTurnHandlerEvents()
+        {
             _turnHandler.OnTurnEndedWithoutPlay += HandlePlayerOutOfTime;
         }
 
@@ -62,7 +68,7 @@ namespace TicTacToe.GameProgression
 
         private void InitTurnHandler()
         {
-            if (_player1.Symbol == Symbol.X)
+            if (_player1.Symbol == enSymbol.X)
             {
                 _turnHandler.SetPlayers(_player1, _player2);
             }
@@ -72,8 +78,13 @@ namespace TicTacToe.GameProgression
             }
         }
 
-        private void HandleMove(Vector2Int position, Symbol symbol)
+        private void HandleMove(Vector2Int position, enSymbol symbol)
         {
+            if (symbol != _turnHandler.CurrentTurnSymbol)
+            {
+                return;
+            }
+
             if (!_gameBoardManager.IsMoveValid(position))
             {
                 return;
@@ -93,7 +104,7 @@ namespace TicTacToe.GameProgression
 
         public void UndoLastMove()
         {
-            if (!_undoManager.CanUndo)
+            if (!_undoManager.CanUndo || _turnHandler.CheckForNoTurnsMade())
             {
                 return;
             }
@@ -106,7 +117,7 @@ namespace TicTacToe.GameProgression
         {
             _gameState = _gameBoardManager.GetGameState();
 
-            if (_gameState != GameState.PLAYING)
+            if (_gameState != enGameState.PLAYING)
             {
                 return true;
             }
@@ -114,23 +125,17 @@ namespace TicTacToe.GameProgression
             return false;
         }
 
-        private void HandlePlayerOutOfTime(Symbol currentTurnSymbol)
+        private void HandlePlayerOutOfTime(enSymbol currentTurnSymbol)
         {
             //if the player is out of time, the other wins.
-            _gameState = currentTurnSymbol == Symbol.X ? GameState.O_WIN : GameState.X_WIN;
+            _gameState = currentTurnSymbol == enSymbol.X ? enGameState.O_WIN : enGameState.X_WIN;
             HandleGameEnd(_gameState);
         }
 
-        private void HandleGameEnd(GameState gameState)
+        private void HandleGameEnd(enGameState gameState)
         {
             _turnHandler.EndTurnCycle();
             OnGameEnded?.Invoke(gameState);
-        }
-
-        private void AssignNamesForPlayers()
-        {
-            _player1.Name = Consts.PLAYER_1_NAME;
-            _player2.Name = Consts.PLAYER_2_NAME;
         }
 
         private void AssignRolesForPlayers()
@@ -142,13 +147,13 @@ namespace TicTacToe.GameProgression
             
             if (playerNumberForXSymbol == 1)
             {
-                _player1.Symbol = Symbol.X;
-                _player2.Symbol = Symbol.O;
+                _player1.Symbol = enSymbol.X;
+                _player2.Symbol = enSymbol.O;
             }
             else
             {
-                _player1.Symbol = Symbol.O;
-                _player2.Symbol = Symbol.X;
+                _player1.Symbol = enSymbol.O;
+                _player2.Symbol = enSymbol.X;
             }
         }
 
