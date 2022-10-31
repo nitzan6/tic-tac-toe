@@ -25,10 +25,10 @@ namespace TicTacToe.GameManagement
             onGameRestart?.Invoke();
         }
 
-        public event Action<BoardState> onGameEnded;
-        public void GameEnded(BoardState boardState)
+        public event Action<GameState> onGameEnded;
+        public void GameEnded(GameState gameResult)
         {
-            onGameEnded?.Invoke(boardState);
+            onGameEnded?.Invoke(gameResult);
         }
 
         public event Action<Vector2Int, Symbol> onMadeMove;
@@ -37,10 +37,10 @@ namespace TicTacToe.GameManagement
             onMadeMove?.Invoke(position, symbol);
         }
 
-        public event Action onUndoLastMove;
-        public void UndoLastMove()
+        public event Action<Vector2Int> onUndoLastMove;
+        public void UndoLastMove(Vector2Int lastMove)
         {
-            onUndoLastMove?.Invoke();
+            onUndoLastMove?.Invoke(lastMove);
         }
     }
 }
