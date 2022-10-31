@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78dfe72c77a0c84199f475905d4e5fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxTimePerTurn: 0
+  TimeLimit: 0
 --- !u!1 &583045228
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +815,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efacfba9020232542a62ea2844fefae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player1GameObject: {fileID: 4237696}
+  _player2GameObject: {fileID: 2013479166}
 --- !u!1 &793285168
 GameObject:
   m_ObjectHideFlags: 0
