@@ -9,11 +9,12 @@ namespace TicTacToe.GameProgression
         public float MaxTimePerTurn;
 
         private bool _isTimerActive = false;
-        private float _countedTime = 0;
+        private float _countedTime;
         public event Action OnTimerFinished;
 
         public void StartTimer()
         {
+            _countedTime = 0;
             _isTimerActive = true;
         }
 

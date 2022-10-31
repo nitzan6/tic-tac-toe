@@ -27,28 +27,25 @@ namespace TicTacToe.GameProgression
         {
             _playerX = playerX;
             _playerO = playerO;
-
-            StartFirstTurn();
         }
 
         public void StartFirstTurn()
         {
             _isXTurn = true; // X starts first
             _timer.StartTimer();
-            NotifyPlayers();
+            NotifyPlayersOfCurrentTurn();
         }
 
         public void ChangeTurns()
         {
             _isXTurn = !_isXTurn;
             _timer.ResetTimer();
-            NotifyPlayers();
+            NotifyPlayersOfCurrentTurn();
         }
 
         public void EndTurnCycle()
         {
             _timer.StopTimer();
-            Debug.Log("Notify players that game has ended");
         }
 
         private void HandleTimerFinished()
@@ -56,12 +53,12 @@ namespace TicTacToe.GameProgression
             OnTurnEndedWithoutPlay?.Invoke(_isXTurn ? Symbol.X : Symbol.O);
         }
 
-        private void NotifyPlayers()
+        private void NotifyPlayersOfCurrentTurn()
         {
             Symbol currentPlayingSymbol = _isXTurn ? Symbol.X : Symbol.O;
 
-            _playerX.ReceiveTurnInformation(currentPlayingSymbol);
-            _playerO.ReceiveTurnInformation(currentPlayingSymbol);
+            _playerX.ReceiveCurrentTurnInfo(currentPlayingSymbol);
+            _playerO.ReceiveCurrentTurnInfo(currentPlayingSymbol);
         }
 
         void OnDisable()
