@@ -11,7 +11,7 @@ namespace TicTacToe.GameManagement.Setup
 
         public void ApplyTimeSettings(float time)
         {
-            _timer.MaxTimePerTurn = time;
+            _timer.TimeLimit = time;
         }
     }
 }

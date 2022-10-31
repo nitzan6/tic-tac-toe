@@ -18,7 +18,7 @@ public class UndoManager : MonoBehaviour
         CanUndo = true;
     }
 
-    private void DisableUndoAbility(GameState _)
+    private void DisableUndoAbility(enGameState _)
     {
         CanUndo = false;
     }

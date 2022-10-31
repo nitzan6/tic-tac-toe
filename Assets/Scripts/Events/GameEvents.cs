@@ -26,14 +26,14 @@ namespace TicTacToe.GameManagement
             onGameRestart?.Invoke();
         }
 
-        public event Action<GameState> onGameEnded;
-        public void GameEnded(GameState gameResult)
+        public event Action<enGameState> onGameEnded;
+        public void GameEnded(enGameState gameResult)
         {
             onGameEnded?.Invoke(gameResult);
         }
 
-        public event Action<Vector2Int, Symbol> onMadeMove;
-        public void MadeMove(Vector2Int position, Symbol symbol)
+        public event Action<Vector2Int, enSymbol> onMadeMove;
+        public void MadeMove(Vector2Int position, enSymbol symbol)
         {
             onMadeMove?.Invoke(position, symbol);
         }
