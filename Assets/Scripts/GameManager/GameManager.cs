@@ -18,12 +18,12 @@ namespace TicTacToe.GameManagment
         private IPlayer _player2;
         private PlayerNameAssigner _playerNameAssigner;
         private GameProgressionManager _gameProgressionManager;
-        private GameResultHandler _gameEndHandler;
+        private GameResultUIController _gameResultUIController;
 
         void Awake()
         {
             _gameProgressionManager = GetComponentInChildren<GameProgressionManager>();
-            _gameEndHandler = GetComponent<GameResultHandler>();
+            _gameResultUIController = GetComponent<GameResultUIController>();
             _playerNameAssigner = new PlayerNameAssigner();
             _gameProgressionManager.OnGameEnded += HandleGameEnd;
         }
@@ -65,14 +65,14 @@ namespace TicTacToe.GameManagment
             {
                 case enGameState.X_WIN:
                     winner = _gameProgressionManager.GetPlayerBySymbol(enSymbol.X);
-                    _gameEndHandler.HandleWin(winner);
+                    _gameResultUIController.HandleWin(winner);
                     break;
                 case enGameState.O_WIN:
                     winner = _gameProgressionManager.GetPlayerBySymbol(enSymbol.O);
-                    _gameEndHandler.HandleWin(winner);
+                    _gameResultUIController.HandleWin(winner);
                     break;
                 case enGameState.DRAW:
-                    _gameEndHandler.HandleDraw();
+                    _gameResultUIController.HandleDraw();
                     break;
                 default:
                     throw new System.Exception($"[GameManager] - Unhandled {gameResult.GetType()} {gameResult}");
