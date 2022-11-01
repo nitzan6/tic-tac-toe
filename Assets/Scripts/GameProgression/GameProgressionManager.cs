@@ -63,9 +63,9 @@ namespace TicTacToe.GameProgression
             _turnHandler.StartFirstTurn();
         }
 
+        //Give each of the players a reference of the board.
         private void SetBoardForPlayers()
         {
-            //Give each of the players a reference of the board.
             _player1.GameBoard = _gameBoardManager.Board;
             _player2.GameBoard = _gameBoardManager.Board;
         }
@@ -86,26 +86,20 @@ namespace TicTacToe.GameProgression
 
         private void HandleMove(Vector2Int position, enSymbol symbol)
         {
-            if (!_turnHandler.IsCurrentPlayingSymbol(symbol))
-            {
-                return;
-            }
-
-            if (!_gameBoardManager.IsMoveValid(position))
+            if (!_turnHandler.IsCurrentPlayingSymbol(symbol) || !_gameBoardManager.IsMoveValid(position))
             {
                 return;
             }
 
             _gameBoardManager.MakeMove(position, symbol);
 
-            if (GetIsGameEnded())
+            if (GetIsGameEnd()) // Did the game end after a move was made?
             {
                 HandleGameEnd(_gameState);
+                return;
             }
-            else
-            {
-                _turnHandler.ChangeTurns();
-            }
+            
+            _turnHandler.ChangeTurns();
         }
 
         //Check if we can undo by asking undoManager
@@ -124,7 +118,7 @@ namespace TicTacToe.GameProgression
         }
 
         //If the GameState is anything other than PLAYING, the game has ended
-        private bool GetIsGameEnded()
+        private bool GetIsGameEnd()
         {
             _gameState = _gameBoardManager.GetGameState();
 
@@ -136,7 +130,7 @@ namespace TicTacToe.GameProgression
             return false;
         }
 
-        //if the player is out of time, the other wins.
+        //if the player is out of time, the other player wins.
         private void HandlePlayerOutOfTime(enSymbol currentTurnSymbol)
         {
             _gameState = currentTurnSymbol == enSymbol.X ? enGameState.O_WIN : enGameState.X_WIN;
@@ -146,7 +140,7 @@ namespace TicTacToe.GameProgression
         private void HandleGameEnd(enGameState gameState)
         {
             _turnHandler.EndTurnCycle();
-            OnGameEnded?.Invoke(gameState);
+            OnGameEnded?.Invoke(gameState); // Invoke OnGameEnded event
         }
 
         public IPlayer GetPlayerBySymbol(enSymbol symbol)

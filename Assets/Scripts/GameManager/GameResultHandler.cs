@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TicTacToe.GameManagement
 {
-    //This class serves as a communicator with The UI
+    //This class serves as a communicator with The GameEndMessage UI
     public class GameResultHandler : MonoBehaviour
     {
         [SerializeField]

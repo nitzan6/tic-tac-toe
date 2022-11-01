@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Singleton for game events
 public class GameEvents : MonoBehaviour
 {
     public static GameEvents Instance;
@@ -15,6 +16,12 @@ public class GameEvents : MonoBehaviour
     public void GameStart()
     {
         onGameStart?.Invoke();
+    }
+
+    public event Action<string> onRolesAssigned;
+    public void RolesAssigned(string firstTurnPlayerName)
+    {
+        onRolesAssigned?.Invoke(firstTurnPlayerName);
     }
 
     public event Action<enGameState> onGameEnded;
