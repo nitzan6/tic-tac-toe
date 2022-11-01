@@ -9,7 +9,7 @@ namespace TicTacToe.GameManagement.Players
     {
         // a few second delay for the AI to wait before
         // choosing a move, to give the feeling as if playing against a real opponent
-        private float _delayInSeconds = 1f;
+        private float _delayInSeconds = 0.5f;
         private System.Random _random;
 
         public enSymbol Symbol { get; set; }
