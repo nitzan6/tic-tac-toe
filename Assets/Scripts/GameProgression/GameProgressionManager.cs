@@ -56,11 +56,17 @@ namespace TicTacToe.GameProgression
         {
             _gameBoardManager.ResetBoard();
 
-            _roleAssigner.AssignRolesForPlayers(_player1, _player2);
+            AssignPlayerRoles();
             SetBoardForPlayers();
             InitTurnHandler();
 
             _turnHandler.StartFirstTurn();
+        }
+
+        private void AssignPlayerRoles()
+        {
+            IPlayer firstPlayer = _roleAssigner.AssignRolesForPlayers(_player1, _player2);
+            GameEvents.Instance.RolesAssigned(firstPlayer.Name);
         }
 
         //Give each of the players a reference of the board.
