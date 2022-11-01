@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public static class Consts
 {
@@ -9,4 +6,8 @@ public static class Consts
 
     public const string PLAYER_1_NAME = "Player1";
     public const string PLAYER_2_NAME = "Player2";
+    public const string COMPUTER_NAME = "Computer";
+
+    public const string GAME_END_MESSAGE_COMPONENT = "Message";
+    public const string WINNER_IMAGE = "WinnerImage";
 }
