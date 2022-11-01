@@ -6,23 +6,22 @@ namespace TicTacToe.UI
 {
     public class EndGameMessageDisplayer : MonoBehaviour
     {
-        private TextMeshPro _text;
-        private Image _image;
-
-        void Awake()
-        {
-             _text = transform.Find(Consts.GAME_END_MESSAGE_COMPONENT).GetComponent<TextMeshPro>();
-             _image = transform.Find(Consts.WINNER_IMAGE).GetComponent<Image>();
-        }
+        [SerializeField]
+        private TMP_Text _text;
+        [SerializeField]
+        private Image _winImage;
 
         public void DisplayWinner(string winnerName)
         {
-
+            _text.text = $"{winnerName} WINS!";
+            _winImage.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
 
         public void DisplayDraw()
         {
-
+            _text.text = "DRAW!";
+            gameObject.SetActive(true);
         }
     }
 
