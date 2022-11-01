@@ -1,8 +1,7 @@
 using UnityEngine;
-using TicTacToe.GameManagement.Gamemodes;
 using TicTacToe.GameManagement.Players;
 
-namespace TicTacToe.GameManagment
+namespace TicTacToe.GameSetup
 {
     [CreateAssetMenu(fileName = "GameSettings", menuName = "Game Settings")]
     public class GameSettings : ScriptableObject
