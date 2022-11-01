@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace TicTacToe.GameManagement
 {
-    public class GameResultUIController : MonoBehaviour
+    public class GameResultHandler : MonoBehaviour
     {
         [SerializeField]
-        private EndGameMessageDisplayer _gameEndMessage;
+        private EndGameMessageDisplayer _gameEndMessageDisplayer;
 
         void OnEnable()
         {
@@ -16,17 +16,17 @@ namespace TicTacToe.GameManagement
 
         private void DisableMessageDisplayer()
         {
-            _gameEndMessage.gameObject.SetActive(false);
+            _gameEndMessageDisplayer.ResetDisplay();
         }
 
         public void HandleWin(IPlayer winner)
         {
-            _gameEndMessage.DisplayWinner(winner.Name);
+            _gameEndMessageDisplayer.DisplayWinner(winner.Name);
         }
 
         public void HandleDraw()
         {
-            _gameEndMessage.DisplayDraw();
+            _gameEndMessageDisplayer.DisplayDraw();
         }
 
         void OnDisable()

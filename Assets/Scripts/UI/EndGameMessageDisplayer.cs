@@ -11,9 +11,17 @@ namespace TicTacToe.UI
         [SerializeField]
         private Image _winImage;
 
+        public void ResetDisplay()
+        {
+            if (gameObject.activeSelf)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+
         public void DisplayWinner(string winnerName)
         {
-            _text.text = $"{winnerName} WINS!";
+            _text.text = $"{winnerName.ToUpper()} WINS!";
             _winImage.gameObject.SetActive(true);
             gameObject.SetActive(true);
         }
@@ -22,6 +30,7 @@ namespace TicTacToe.UI
         {
             _text.text = "DRAW!";
             gameObject.SetActive(true);
+            _winImage.gameObject.SetActive(false);
         }
     }
 
