@@ -16,15 +16,13 @@ namespace TicTacToe.GameManagment
 
         private IPlayer _player1;
         private IPlayer _player2;
-        private PlayerNameAssigner _playerNameAssigner;
         private GameProgressionManager _gameProgressionManager;
-        private GameResultUIController _gameResultUIController;
+        private GameResultHandler _gameResultHandler;
 
         void Awake()
         {
             _gameProgressionManager = GetComponentInChildren<GameProgressionManager>();
-            _gameResultUIController = GetComponent<GameResultUIController>();
-            _playerNameAssigner = new PlayerNameAssigner();
+            _gameResultHandler = GetComponent<GameResultHandler>();
             _gameProgressionManager.OnGameEnded += HandleGameEnd;
         }
 
@@ -47,7 +45,8 @@ namespace TicTacToe.GameManagment
 
         private void AssignNamesForPlayers()
         {
-            _playerNameAssigner.AssignNamesToPlayers(_player1, _player2);
+            _player1.Name = Consts.PLAYER_1_NAME;
+            _player2.Name = Consts.PLAYER_2_NAME;
         }
 
         public void StartGame()
@@ -65,15 +64,18 @@ namespace TicTacToe.GameManagment
             {
                 case enGameState.X_WIN:
                     winner = _gameProgressionManager.GetPlayerBySymbol(enSymbol.X);
-                    _gameResultUIController.HandleWin(winner);
+                    _gameResultHandler.HandleWin(winner);
                     break;
+
                 case enGameState.O_WIN:
                     winner = _gameProgressionManager.GetPlayerBySymbol(enSymbol.O);
-                    _gameResultUIController.HandleWin(winner);
+                    _gameResultHandler.HandleWin(winner);
                     break;
+
                 case enGameState.DRAW:
-                    _gameResultUIController.HandleDraw();
+                    _gameResultHandler.HandleDraw();
                     break;
+
                 default:
                     throw new System.Exception($"[GameManager] - Unhandled {gameResult.GetType()} {gameResult}");
             }
