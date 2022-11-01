@@ -2,6 +2,7 @@ using System.Collections;
 using TicTacToe.GameManagement;
 using TicTacToe.GameManagement.Players;
 using TicTacToe.GameProgression;
+using TicTacToe.GameSetup;
 using UnityEngine;
 
 namespace TicTacToe.GameManagment
@@ -15,12 +16,15 @@ namespace TicTacToe.GameManagment
 
         private IPlayer _player1;
         private IPlayer _player2;
-
+        private PlayerNameAssigner _playerNameAssigner;
         private GameProgressionManager _gameProgressionManager;
+        private GameResultHandler _gameEndHandler;
 
         void Awake()
         {
             _gameProgressionManager = GetComponentInChildren<GameProgressionManager>();
+            _gameEndHandler = GetComponent<GameResultHandler>();
+            _playerNameAssigner = new PlayerNameAssigner();
             _gameProgressionManager.OnGameEnded += HandleGameEnd;
         }
 
@@ -43,8 +47,7 @@ namespace TicTacToe.GameManagment
 
         private void AssignNamesForPlayers()
         {
-            _player1.Name = Consts.PLAYER_1_NAME;
-            _player2.Name = Consts.PLAYER_2_NAME;
+            _playerNameAssigner.AssignNamesToPlayers(_player1, _player2);
         }
 
         public void StartGame()
@@ -56,22 +59,27 @@ namespace TicTacToe.GameManagment
         private void HandleGameEnd(enGameState gameResult)
         {
             GameEvents.Instance.GameEnded(gameResult);
+            IPlayer winner;
 
             switch (gameResult)
             {
                 case enGameState.X_WIN:
-                    Debug.Log("X WIN");
+                    winner = _gameProgressionManager.GetPlayerBySymbol(enSymbol.X);
+                    _gameEndHandler.HandleWin(winner);
                     break;
                 case enGameState.O_WIN:
-                    Debug.Log("O WIN");
+                    winner = _gameProgressionManager.GetPlayerBySymbol(enSymbol.O);
+                    _gameEndHandler.HandleWin(winner);
                     break;
                 case enGameState.DRAW:
-                    Debug.Log("DRAW");
+                    _gameEndHandler.HandleDraw();
                     break;
                 default:
                     throw new System.Exception($"[GameManager] - Unhandled {gameResult.GetType()} {gameResult}");
             }
         }
+
+        
 
         void OnDisable()
         {

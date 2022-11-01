@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using TicTacToe.GameManagement.Players;
+using TicTacToe.GameSetup;
 
 namespace TicTacToe.GameProgression
 {
@@ -8,6 +9,7 @@ namespace TicTacToe.GameProgression
     {
         private GameBoardManager _gameBoardManager;
         private TurnHandler _turnHandler;
+        private RoleAssigner _roleAssigner;
         private IPlayer _player1;
         private IPlayer _player2;
         private enGameState _gameState;
@@ -25,6 +27,7 @@ namespace TicTacToe.GameProgression
             _gameBoardManager = GetComponent<GameBoardManager>();
             _turnHandler = GetComponent<TurnHandler>();
             _undoManager = FindObjectOfType<UndoManager>();
+            _roleAssigner = new RoleAssigner();
 
             SubscribeToTurnHandlerEvents();
         }
@@ -48,11 +51,12 @@ namespace TicTacToe.GameProgression
             _turnHandler.OnTurnEndedWithoutPlay += HandlePlayerOutOfTime;
         }
 
+        //Initialize all of the game components before starting the first turn
         public void StartGame()
         {
             _gameBoardManager.ResetBoard();
 
-            AssignRolesForPlayers();
+            _roleAssigner.AssignRolesForPlayers(_player1, _player2);
             SetBoardForPlayers();
             InitTurnHandler();
 
@@ -66,6 +70,8 @@ namespace TicTacToe.GameProgression
             _player2.GameBoard = _gameBoardManager.Board;
         }
 
+        //The turn handler shouldn't care about which is player 1 and which is player 2
+        //It only cares about their respective symbol
         private void InitTurnHandler()
         {
             if (_player1.Symbol == enSymbol.X)
@@ -80,7 +86,7 @@ namespace TicTacToe.GameProgression
 
         private void HandleMove(Vector2Int position, enSymbol symbol)
         {
-            if (symbol != _turnHandler.CurrentTurnSymbol)
+            if (!_turnHandler.IsCurrentPlayingSymbol(symbol))
             {
                 return;
             }
@@ -102,6 +108,7 @@ namespace TicTacToe.GameProgression
             }
         }
 
+        //Check if we can undo by asking undoManager
         public void UndoLastMove()
         {
             if (!_undoManager.CanUndo || _turnHandler.CheckForNoTurnsMade())
@@ -109,10 +116,14 @@ namespace TicTacToe.GameProgression
                 return;
             }
             
-            _gameBoardManager.UndoLastMove();
-            _turnHandler.RevertToLastRound();
+            if (!_turnHandler.IsFirstRound())
+            {
+                _gameBoardManager.UndoLastMove();
+                _turnHandler.RevertToLastRound();
+            }
         }
 
+        //If the GameState is anything other than PLAYING, the game has ended
         private bool GetIsGameEnded()
         {
             _gameState = _gameBoardManager.GetGameState();
@@ -125,9 +136,9 @@ namespace TicTacToe.GameProgression
             return false;
         }
 
+        //if the player is out of time, the other wins.
         private void HandlePlayerOutOfTime(enSymbol currentTurnSymbol)
         {
-            //if the player is out of time, the other wins.
             _gameState = currentTurnSymbol == enSymbol.X ? enGameState.O_WIN : enGameState.X_WIN;
             HandleGameEnd(_gameState);
         }
@@ -138,22 +149,20 @@ namespace TicTacToe.GameProgression
             OnGameEnded?.Invoke(gameState);
         }
 
-        private void AssignRolesForPlayers()
+        public IPlayer GetPlayerBySymbol(enSymbol symbol)
         {
-            System.Random random = new System.Random();
-
-            //Generate a random number between 1 and 2
-            int playerNumberForXSymbol = random.Next(1, 3);
-            
-            if (playerNumberForXSymbol == 1)
+            if (symbol == enSymbol.EMPTY)
             {
-                _player1.Symbol = enSymbol.X;
-                _player2.Symbol = enSymbol.O;
+                throw new Exception("Cannot get player with symbol of Empty!");
+            }
+
+            if (_player1.Symbol == symbol)
+            {
+                return _player1;
             }
             else
             {
-                _player1.Symbol = enSymbol.O;
-                _player2.Symbol = enSymbol.X;
+                return _player2;
             }
         }
 
