@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 namespace TicTacToe.UI
 {
+    //This component controlls the undo and reset buttons
     public class GameOperationsUIController : MonoBehaviour
     {
         [SerializeField]

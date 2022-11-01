@@ -2,18 +2,23 @@ using UnityEngine;
 
 namespace TicTacToe.GameSetup
 {
+    //Here we apply all of the settings in the GameSettings scriptable object
+    //There is a different class to handle each of the parameters in GameSettings
     public class GameSetup : MonoBehaviour
     {
         [SerializeField]
         private GameSettings _gameSettings;
 
-        private GamemodeHandler _gamemodeHandler;
+        private GamemodeSettingsHandler _gamemodeSettingsHandler;
         private TimeSettingsHandler _timeHandler;
+        private AIDelaySettingsHandler _aiDelaySetter;
         
         void Awake()
         {
-            _gamemodeHandler = GetComponent<GamemodeHandler>();
+            _gamemodeSettingsHandler = GetComponent<GamemodeSettingsHandler>();
             _timeHandler = GetComponent<TimeSettingsHandler>();
+            _aiDelaySetter = GetComponent<AIDelaySettingsHandler>();
+
             ApplySettings();
         }
 
@@ -21,16 +26,22 @@ namespace TicTacToe.GameSetup
         {
             ApplyGamemodeSettings();
             ApplyTimeSettings();
+            ApplyDelayToAIComponents();
         }
 
         private void ApplyGamemodeSettings()
         {
-            _gamemodeHandler.ApplySelectedGamemode(_gameSettings.Gamemode);
+            _gamemodeSettingsHandler.ApplySelectedGamemode(_gameSettings.Gamemode);
         }
 
         private void ApplyTimeSettings()
         {
             _timeHandler.ApplyTimeSettings(_gameSettings.MaxTimePerTurn);
+        }
+
+        private void ApplyDelayToAIComponents()
+        {
+            _aiDelaySetter.ApplyDelay(_gameSettings.AIDelayTime);
         }
     }
 }

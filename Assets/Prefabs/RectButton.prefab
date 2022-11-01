@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RETURN TO MENU
+  m_text: HELLO WORLD
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ff83e2868fcf3b84fa2b7aff28fbbd30, type: 2}
   m_sharedMaterial: {fileID: 5350372707050936316, guid: ff83e2868fcf3b84fa2b7aff28fbbd30, type: 2}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.45
+  m_fontSize: 32.25
   m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 1

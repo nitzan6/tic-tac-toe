@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   MaxTimePerTurn: 5
+  AIDelayTime: 0.5

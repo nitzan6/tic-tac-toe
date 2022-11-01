@@ -1,8 +1,10 @@
+using System.Collections.Generic;
+using TicTacToe.GameManagement.Players;
 using UnityEngine;
 
 namespace TicTacToe.GameSetup
 {
-    public class GamemodeHandler : MonoBehaviour
+    public class GamemodeSettingsHandler : MonoBehaviour
     {
         [SerializeField]
         private GameObject _player1GameObject;

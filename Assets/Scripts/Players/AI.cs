@@ -9,7 +9,7 @@ namespace TicTacToe.GameManagement.Players
     {
         // a few second delay for the AI to wait before
         // choosing a move, to give the feeling as if playing against a real opponent
-        private float _delayInSeconds = 0.5f;
+        public float DelayInSeconds;
         private System.Random _random;
 
         public enSymbol Symbol { get; set; }
@@ -43,7 +43,7 @@ namespace TicTacToe.GameManagement.Players
         private IEnumerator DetermineMove()
         {
             //Wait for the amount specified in the delay
-            yield return new WaitForSeconds(_delayInSeconds);
+            yield return new WaitForSeconds(DelayInSeconds);
 
             bool isChosenValidCell = false;
             Vector2Int chosenCellPosition = new Vector2Int();
