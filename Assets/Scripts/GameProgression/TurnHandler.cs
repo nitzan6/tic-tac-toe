@@ -1,5 +1,6 @@
 using System;
 using TicTacToe.GameManagement.Players;
+using TicTacToe.Utils;
 using UnityEngine;
 
 namespace TicTacToe.GameProgression
@@ -9,7 +10,7 @@ namespace TicTacToe.GameProgression
         private IPlayer _playerX;
         private IPlayer _playerO;
         private Timer _timer;
-        public enSymbol CurrentTurnSymbol { get; private set; }
+        private enSymbol CurrentTurnSymbol;
         private int _turnCount = 0;
 
         public event Action<enSymbol> OnTurnEndedWithoutPlay;
@@ -47,21 +48,24 @@ namespace TicTacToe.GameProgression
             NotifyPlayers();
         }
 
+        public bool IsCurrentPlayingSymbol(enSymbol symbol)
+        {
+            return symbol == CurrentTurnSymbol;
+        }
+
         public bool CheckForNoTurnsMade()
         {
             return _turnCount == 0;
         }
 
+        public bool IsFirstRound()
+        {
+            return _turnCount < 2;
+        }
+
         //In this context a round is 2 turns
         public void RevertToLastRound()
         {
-            if (_turnCount < 2)
-            {
-                StartFirstTurn();
-                _turnCount = 0;
-                return;
-            }
-
             _turnCount -= 2;
             ResetTurn();
         }
@@ -71,7 +75,7 @@ namespace TicTacToe.GameProgression
             _timer.StopTimer();
         }
 
-        public void ResetTurn()
+        private void ResetTurn()
         {
             _timer.ResetTimer();
         }
