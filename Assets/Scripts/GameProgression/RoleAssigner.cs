@@ -21,11 +21,15 @@ namespace TicTacToe.GameProgression
             {
                 player1.Symbol = enSymbol.X;
                 player2.Symbol = enSymbol.O;
+
+                GameEvents.Instance.RolesAssigned(player1.Name);
             }
             else
             {
                 player1.Symbol = enSymbol.O;
                 player2.Symbol = enSymbol.X;
+
+                GameEvents.Instance.RolesAssigned(player2.Name);
             }
         }
     }
