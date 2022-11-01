@@ -7,7 +7,7 @@ namespace TicTacToe.GameSetup
     public class GameSettings : ScriptableObject
     {
         public Gamemode Gamemode = new Gamemode(typeof(LocalPlayer), typeof(AI));
-        public float MaxTimePerTurn;
+        public float MaxTimePerTurn = 5f;
     }
 }
 
