@@ -35,7 +35,7 @@ namespace TicTacToe.UI
 
         private IEnumerator DisplayTextForSetTime(string text)
         {
-            _text.text = $"{text.ToUpper()} GOES FIRST";
+            _text.text = $"{text.ToUpper()} IS X";
             yield return new WaitForSeconds(_displayTime);
 
             _text.text = string.Empty;
