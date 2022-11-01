@@ -1,7 +1,6 @@
 using UnityEngine;
-using TicTacToe.GameManagment;
 
-namespace TicTacToe.GameManagement.Setup
+namespace TicTacToe.GameSetup
 {
     public class GameSetup : MonoBehaviour
     {

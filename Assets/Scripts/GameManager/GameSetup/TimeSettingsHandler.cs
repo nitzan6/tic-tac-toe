@@ -1,8 +1,8 @@
-using TicTacToe.GameProgression;
+using TicTacToe.Utils;
 using UnityEngine;
 
 
-namespace TicTacToe.GameManagement.Setup
+namespace TicTacToe.GameSetup
 {
     public class TimeSettingsHandler : MonoBehaviour
     {

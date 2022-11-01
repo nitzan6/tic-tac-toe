@@ -1,37 +1,27 @@
-using System;
-using TicTacToe.GameManagement.Gamemodes;
-using TicTacToe.GameManagment.Setup;
 using UnityEngine;
 
-namespace TicTacToe.GameManagement.Setup
+namespace TicTacToe.GameSetup
 {
     public class GamemodeHandler : MonoBehaviour
     {
         [SerializeField]
-        private GameObject _player1;
+        private GameObject _player1GameObject;
         [SerializeField]
-        private GameObject _player2;
+        private GameObject _player2GameObject;
         [SerializeField]
         private UndoManager _undoManager;
 
-        private Gamemode _gamemode;
-
         public void ApplySelectedGamemode(Gamemode currentGamemode)
         {
-            _gamemode = currentGamemode;
-
-            ApplyToPlayers();
+            ApplyGamemodeSettingsToPlayers(currentGamemode);
             _undoManager.ApplyUndoSettings(currentGamemode);
         }
 
-        private void ApplyToPlayers()
+        // Add player components to player gameobjects by the specified types
+        private void ApplyGamemodeSettingsToPlayers(Gamemode currentGamemode)
         {
-            // Get the types of the players
-            Type[] playerTypes = PlayerFactory.GetPlayerTypesFromGamemode(_gamemode);
-
-            //Add the components of the specified types to player1 and player2
-            _player1.AddComponent(playerTypes[0]);
-            _player2.AddComponent(playerTypes[1]);
+            _player1GameObject.AddComponent(currentGamemode.Player1Type);
+            _player2GameObject.AddComponent(currentGamemode.Player2Type);
         }
     }
 }
