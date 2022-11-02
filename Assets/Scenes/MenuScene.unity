@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 3
   m_MaxValue: 10
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
@@ -562,8 +562,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1668157841}
-        m_TargetAssemblyTypeName: SliderEventListener, Code
-        m_MethodName: SetTextDisplayAsWholeNumber
+        m_TargetAssemblyTypeName: TicTacToe.UI.SliderEventListener, Code
+        m_MethodName: SetTextDisplay
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1294,8 +1294,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 600, y: 600}
-  m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1353,6 +1353,7 @@ GameObject:
   - component: {fileID: 541491180}
   - component: {fileID: 541491182}
   - component: {fileID: 541491181}
+  - component: {fileID: 541491183}
   m_Layer: 5
   m_Name: SettingsPanel
   m_TagString: Untagged
@@ -1377,10 +1378,10 @@ RectTransform:
   m_Father: {fileID: 1289786797}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -6.050415, y: -152.9}
-  m_SizeDelta: {x: -161.2803, y: -421.702}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.5684, y: -166}
+  m_SizeDelta: {x: 544.9161, y: 211.1664}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &541491181
 MonoBehaviour:
@@ -1420,6 +1421,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541491179}
   m_CullTransparentMesh: 1
+--- !u!114 &541491183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541491179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c846ad8ae7c84df428c92bc0e9a00e09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameSettings: {fileID: 11400000, guid: 4db87e7dca03c4e4795d22a9259c692e, type: 2}
+  _maxTimePerTurnSlider: {fileID: 129999482}
+  _aiDelayTimeSlider: {fileID: 2055253225}
 --- !u!1 &570791703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,8 +1468,8 @@ RectTransform:
   m_Father: {fileID: 1330321928}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.16666667, y: 0}
-  m_AnchorMax: {x: 0.16666667, y: 1}
+  m_AnchorMin: {x: 0.13793103, y: 0}
+  m_AnchorMax: {x: 0.13793103, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1838,7 +1854,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.16666667, y: 1}
+  m_AnchorMax: {x: 0.13793103, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2113,7 +2129,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -32.056, y: -23.6}
+  m_AnchoredPosition: {x: -39.3, y: -31.3}
   m_SizeDelta: {x: 22.333008, y: 22.332901}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &973331368
@@ -2648,7 +2664,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.5683899, y: -159.79999}
+  m_AnchoredPosition: {x: -1.5684204, y: -159.79999}
   m_SizeDelta: {x: -331.0465, y: -391.2326}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1654492972
@@ -3304,8 +3320,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 920645244}
   m_HandleRect: {fileID: 570791704}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 3
+  m_MinValue: 0.1
+  m_MaxValue: 2.98
   m_WholeNumbers: 0
   m_Value: 0.5
   m_OnValueChanged:
@@ -3324,8 +3340,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 521367375}
-        m_TargetAssemblyTypeName: SliderEventListener, Code
-        m_MethodName: SetTextDisplayAsFloat
+        m_TargetAssemblyTypeName: TicTacToe.UI.SliderEventListener, Code
+        m_MethodName: SetTextDisplay
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -12,12 +12,7 @@ namespace TicTacToe.UI
             _text = GetComponent<TMP_Text>();
         }
 
-        public void SetTextDisplayAsWholeNumber(float value)
-        {
-            _text.text = value.ToString();
-        }
-
-        public void SetTextDisplayAsFloat(float value)
+        public void SetTextDisplay(float value)
         {
             _text.text = value.ToString("0.00");
         }
