@@ -1,5 +1,4 @@
 using UnityEngine;
-using TicTacToe.GameManagement;
 using System.Collections.Generic;
 
 namespace TicTacToe.GameProgression
@@ -10,6 +9,7 @@ namespace TicTacToe.GameProgression
         private Referee _referee;
         public Board Board { get; private set; }
 
+        //Reset board properties
         public void ResetBoard()
         {
             Board = new Board(Consts.BOARD_WIDTH, Consts.BOARD_HEIGHT);
@@ -45,6 +45,7 @@ namespace TicTacToe.GameProgression
             GameEvents.Instance.MadeMove(position, symbol);
         }
 
+        // Returns the current state of the game, if its still playing or a result has been reached
         public enGameState GetGameState()
         {
             enSymbol winner = _referee.GetWinner(Board.Cells);
