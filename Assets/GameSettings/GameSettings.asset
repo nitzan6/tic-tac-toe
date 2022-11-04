@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b28ed9f5640d434ea490090722f1cba, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  MaxTimePerTurn: 8
-  AIDelayTime: 0.2
+  MaxTimePerTurn: 5
+  AIDelayTime: 0.5

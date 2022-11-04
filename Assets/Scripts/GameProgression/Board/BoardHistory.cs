@@ -17,7 +17,8 @@ namespace TicTacToe.GameProgression
             _moveHistory.Push(move);
         }
 
-        
+        //Removes the n last moves from history and returns them as a list. If the amount of moves requested to remove is greater than
+        //The amount of moves stored, it will remove all of the moves stored
         public List<Vector2Int> GetAndRemoveLastMoves(int numberOfMoves)
         {
             List<Vector2Int> lastMoveCellPositions = new List<Vector2Int>();
