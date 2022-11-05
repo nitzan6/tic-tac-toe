@@ -11,11 +11,11 @@ namespace TicTacToe.GameSetup
         private GameSettings _gameSettings;
 
         private Dictionary<string, Gamemode> _gamemodes = new Dictionary<string, Gamemode>()
-    {
-        { Consts.LOCAL_MULTIPLAYER, new Gamemode(typeof(LocalPlayer), typeof(LocalPlayer)) },
-        { Consts.LOCAL_VS_AI, new Gamemode(typeof(LocalPlayer), typeof(AI)) },
-        { Consts.AI_VS_AI, new Gamemode(typeof(AI), typeof(AI)) }
-    };
+        {
+            { Consts.LOCAL_MULTIPLAYER, new Gamemode(typeof(LocalPlayer), typeof(LocalPlayer)) },
+            { Consts.LOCAL_VS_AI, new Gamemode(typeof(LocalPlayer), typeof(AI)) },
+            { Consts.AI_VS_AI, new Gamemode(typeof(AI), typeof(AI)) }
+        };
 
         public void SetLocalVsLocalGamemode()
         {
